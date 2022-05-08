@@ -1,0 +1,35 @@
+{
+  "name": "greenshop-e-commerce",
+  "version": "1.0.0",
+  "description": "e-commerce",
+  "main": "server.js",
+  "scripts": {
+    "start": "nodemon api/server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/leonardo-bravop/GreenShop-E-Commerce.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/leonardo-bravop/GreenShop-E-Commerce/issues"
+  },
+  "homepage": "https://github.com/leonardo-bravop/GreenShop-E-Commerce#readme",
+  "dependencies": {
+    "bcrypt": "^5.0.1",
+    "body-parser": "^1.20.0",
+    "cookie-parser": "^1.4.6",
+    "dotenv": "^16.0.0",
+    "express": "^4.18.1",
+    "express-session": "^1.17.2",
+    "morgan": "^1.10.0",
+    "nodemailer": "^6.7.5",
+    "nodemon": "^2.0.16",
+    "passport": "^0.5.2",
+    "passport-local": "^1.0.0",
+    "pg": "^8.7.3",
+    "pg-hstore": "^2.3.4",
+    "sequelize": "^6.19.0"
+  }
+}
