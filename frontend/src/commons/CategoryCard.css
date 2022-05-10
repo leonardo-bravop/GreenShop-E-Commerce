@@ -1,0 +1,43 @@
+.card-container {
+  background-size: cover;
+  background-position: center;
+  width: 100px;
+  height: 150px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 10px;
+}
+
+.card-container:hover {
+  backdrop-filter: opacity(20%);
+}
+
+.categorycard-title {
+  padding: 10px;
+  background-color: rgba(0, 0, 0, 0.4);
+  color: white;
+  font-size: 1em;
+}
+
+@media (min-width: 600px) {
+    .card-container {
+      margin: 0 20px;
+      width: 200px;
+      height: 200px;
+    }
+    .categorycard-title {
+      font-size: 1.5em;
+    }
+  }
+
+@media (min-width: 990px) {
+  .card-container {
+    margin: 0 40px;
+    width: 250px;
+    height: 250px;
+  }
+  .categorycard-title {
+    font-size: 1.5em;
+  }
+}
