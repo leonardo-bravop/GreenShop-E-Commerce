@@ -1,3 +1,20 @@
-.buttonLogin{
-    border: none;
+.buttonLogin {
+  border: none;
+}
+
+.user-div {
+  right: 80px;
+}
+
+#dropdown-basic::after {
+  display: none !important; 
+}
+
+
+@media (min-width: 990px) {
+  .user-div {
+      /* position: absolute; */
+
+    right: 0px;
+  }
 }
