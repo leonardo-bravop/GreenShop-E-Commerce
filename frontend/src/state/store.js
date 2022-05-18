@@ -6,7 +6,7 @@ import shoppingCartReducer from './shoppingCart';
 import itemCartReducer from './itemCart';
 
 const store = configureStore({
-  middleware: getDefaultMiddleware => getDefaultMiddleware().concat(logger),
+  // middleware: getDefaultMiddleware => getDefaultMiddleware().concat(logger),
   reducer: {
     user: userReducer,
     shoppingCart: shoppingCartReducer,
