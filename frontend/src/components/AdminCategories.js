@@ -50,14 +50,14 @@ const AdminCategories = () => {
         <button className="btn btn-success" style={{ marginBottom: "40px" }}>
           Crear categoría
         </button>
-      </Link>   
-      <Table bordered hover>
+      </Link>
+      <Table bordered hover responsive>
         <thead>
           <tr>
             <th>Id</th>
-            <th>Nombre</th>
-            <th>Descripción</th>
-            <th>Acción</th>
+            <th>Name</th>
+            <th>Description</th>
+            <th>Action</th>
           </tr>
         </thead>
         <tbody>
@@ -71,10 +71,14 @@ const AdminCategories = () => {
                   <div className="categoriesCelda">{result.name}</div>
                 </td>
                 <td>
-                  <div className="categoriesCelda">{result.description}</div>
+                  <div className="categoriesCelda description-td">
+                    {result.description.length > 50
+                      ? result.description.slice(0, 50) + "..."
+                      : result.description}
+                  </div>
                 </td>
                 <td>
-                  <div className="categoriesCelda">
+                  <div className="categoriesCelda action-buttons">
                     <button
                       className="btn btn-danger"
                       onClick={() => {

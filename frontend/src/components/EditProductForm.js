@@ -32,6 +32,8 @@ const EditProductForm = () => {
     axios
       .get(`/api/product/${id}`)
       .then((res) => {
+        console.log(`res.data es`, res.data);
+        if(res.data.price) res.data.price = parseInt(res.data.price.replace(",", ""))
         setProduct(res.data);
       })
       .then(() => {
@@ -66,6 +68,9 @@ const EditProductForm = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    
+    product.img.filter(path=>!!path)
+
     axios
       .put(`/api/product/${product.id}`, product)
       .then(() => {
@@ -130,7 +135,7 @@ const EditProductForm = () => {
                 className="productInput priceInput"
                 value={product.price}
                 onChange={(e) =>
-                  setProduct({ ...product, price: e.target.value })
+                  setProduct({ ...product, price: parseInt(e.target.value) })
                 }
               />
             </span>
@@ -155,7 +160,7 @@ const EditProductForm = () => {
                 // console.log(`categ es`, categ)
                 // console.log(`checked state dentro de map es`, checkedState)
                 return (
-                  <div>
+                  <div key={index}>
                     <input
                       className="form-check-input"
                       type="checkbox"
@@ -266,7 +271,7 @@ const EditProductForm = () => {
                 type="submit"
                 style={{ marginRight: "0px" }}
               >
-                Editar producto
+                Aceptar
               </button>
             </div>
           </div>

@@ -13,9 +13,10 @@ const AdminProducts = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (searchValue.value !== "") {
+    console.log(`antes de axios, search value es`, searchValue.value);
+    if (searchValue.value.trim()) {
       axios
-        .get(`/api/product/name/${searchValue.value}`)
+        .get(`/api/product/name/${searchValue.value.trim()}`)
         .then((res) => SetResults(res.data));
     }
   };
@@ -34,9 +35,13 @@ const AdminProducts = () => {
         console.log("eliminado");
       })
       .then(() => {
-        axios
-          .get(`/api/product/name/${searchValue.value}`)
-          .then((res) => SetResults(res.data));
+        if (searchValue.value) {
+          axios
+            .get(`/api/product/name/${searchValue.value}`)
+            .then((res) => SetResults(res.data));
+        } else {
+          axios.get("/api/product/").then(({ data }) => SetResults(data));
+        }
       });
     setShow(false);
   };
@@ -45,9 +50,11 @@ const AdminProducts = () => {
 
   //
 
-  const handleEdit = (e) => {
-    const productId = e.target.id;
-  };
+  useEffect(() => {
+    axios.get("/api/product/").then(({ data }) => {
+      SetResults(data);
+    });
+  }, []);
 
   return (
     <div className="container usersTitleDiv">
@@ -64,22 +71,22 @@ const AdminProducts = () => {
             {...searchValue}
           />
           <button className="btn btn-primary searchFormBtn" type="submit">
-            Buscar
+            Search
           </button>
         </form>
         <Link to={"/admin/products/new-product"}>
           <button className="btn btn-success" style={{ marginTop: "20px" }}>
-            Crear producto
+            Create product
           </button>
         </Link>
       </div>
       <Table bordered hover>
         <thead>
           <tr>
-            <th>Imagen</th>
-            <th>Nombre</th>
-            <th>Descripción</th>
-            <th>Acción</th>
+            <th>Picture</th>
+            <th>Name</th>
+            <th>Description</th>
+            <th>Action</th>
           </tr>
         </thead>
         <tbody>
@@ -88,17 +95,23 @@ const AdminProducts = () => {
               <tr key={result.id}>
                 <td>
                   {
-                    <img
-                      src={result.img[0] ? result.img[0] : ""}
-                      style={{ width: "100%", maxWidth: "100px" }}
-                    />
+                    <Link to={`/product/${result.id}`}>
+                      <img
+                        src={result.img ? result.img[0] : ""}
+                        style={{ width: "100%", maxWidth: "100px" }}
+                      />
+                    </Link>
                   }
                 </td>
                 <td>
                   <div className="celdaContent">{result.name}</div>
                 </td>
                 <td>
-                  <div className="celdaContent">{result.description}</div>
+                  <div className="celdaContent">
+                    {result.description.length > 200
+                      ? result.description.slice(0, 200)+"..."
+                      : result.description}
+                  </div>
                 </td>
                 <td>
                   <div className="celdaContent">
@@ -109,12 +122,12 @@ const AdminProducts = () => {
                         handleShow();
                       }}
                     >
-                      Eliminar
+                      Delete
                     </button>
 
                     <Modal show={show} onHide={handleClose}>
                       <Modal.Header closeButton>
-                        <Modal.Title>Confirmar eliminar producto?</Modal.Title>
+                        <Modal.Title>Confirm delete product?</Modal.Title>
                       </Modal.Header>
                       <Modal.Footer>
                         <button
@@ -130,7 +143,7 @@ const AdminProducts = () => {
                             handleDelete();
                           }}
                         >
-                          Eliminar
+                          Delete
                         </button>
                       </Modal.Footer>
                     </Modal>
@@ -141,7 +154,7 @@ const AdminProducts = () => {
                         // id={result.id}
                         onClick={() => {}}
                       >
-                        Editar
+                        Edit
                       </button>
                     </Link>
                   </div>
