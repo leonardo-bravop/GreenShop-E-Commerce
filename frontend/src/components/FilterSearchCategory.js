@@ -2,47 +2,24 @@ import { Accordion, Form, Offcanvas } from "react-bootstrap";
 import Grid from "./Grid";
 import { useState, useEffect } from "react";
 import axios from "axios";
-// import { handleOnChangeCheck } from "../utils/FIlterProducts";
 
 import "../style/FilterSearch.css";
+import { useParams } from "react-router";
 
-const FilterSearch = ({}) => {
+const FilterSearchCategory = ({ family }) => {
+  // const { id } = useParams();
+  const { name } = useParams();
   //Mobile Filter Offcanvas
   const [showMobileFilter, setShowMobileFilter] = useState(false);
   const handleClose = () => setShowMobileFilter(false);
   const handleShow = () => setShowMobileFilter(true);
 
   const [allCategories, setAllCategories] = useState([]);
-  const [plantCategories, setPlantsCategories] = useState([]);
-  const [accesoriesCategories, setAccesoriesCategories] = useState([]);
-
   const [checkedState, setCheckedState] = useState({});
   const [products, setProducts] = useState([]);
   const [allProducts, setAllProducts] = useState([]);
   const [latestProducts, setLatestProducts] = useState([]);
   const [showFilter, setShowFilter] = useState(true);
-
-  useEffect(() => {
-    const auxObj = {};
-    // const auxArr = [];
-    axios
-      .get("/api/category/getbyFamilyId/1")
-      .then(({ data }) => {
-        for (let i = 0; i < data.length; i++) {
-          auxObj[data[i].id] = false;
-        }
-        setPlantsCategories(data);
-        return axios.get("/api/category/getbyFamilyId/2");
-      })
-      .then(({ data }) => {
-        for (let j = 0; j < data.length; j++) {
-          auxObj[data[j].id] = false;
-        }
-        setAccesoriesCategories(data);
-        setCheckedState(auxObj);
-        // setAllCategories(auxArr);
-      });
-  }, []);
 
   const handleShowFilter = () => {
     setShowFilter(!showFilter);
@@ -69,6 +46,7 @@ const FilterSearch = ({}) => {
   const handleOnChangeCheck = (categ) => {
     const categoriesId = [];
     const updatedCheckedState = { ...checkedState };
+
     for (const property in updatedCheckedState) {
       if (parseInt(property) === categ)
         updatedCheckedState[categ] = !updatedCheckedState[categ];
@@ -94,21 +72,40 @@ const FilterSearch = ({}) => {
   };
 
   useEffect(() => {
-    axios.get("/api/product/").then(({ data }) => {
-      setLatestProducts(data);
-      setProducts(data);
-      setAllProducts(data);
-    });
-  }, []);
+    let categoryId;
+    axios
+      .get(`/api/category/getByName/${name.replace("_", " ")}`)
+      .then(({ data }) => {
+        categoryId = data.id;
+        return axios.get(`/api/product/getbyFamilyId/${family.id}`);
+      })
+      .then(({ data }) => {
+        const categoriesId = [parseInt(categoryId)];
+        setAllProducts(data);
+        let auxProducts = data.filter((product) => {
+          for (let i = 0; i < product.categorias.length; i++) {
+            if (categoriesId.includes(product.categorias[i].id)) return true;
+          }
+        });
+        setProducts(auxProducts);
+        setLatestProducts(auxProducts);
+        return axios.get(`/api/category/getbyFamilyId/${family.id}`);
+      })
+      .then(({ data }) => {
+        const auxObj = {};
+        for (let i = 0; i < data.length; i++) {
+          auxObj[data[i].id] =
+            data[i].id === parseInt(categoryId) ? true : false;
+        }
+        setCheckedState(auxObj);
+        setAllCategories(data);
+      });
+  }, [name]);
 
   return (
     <div>
       <div className="options">
-        <div
-          className="filter-header"
-          onClick={handleShowFilter}
-          style={{ cursor: "pointer" }}
-        >
+        <div className="filter-header" onClick={handleShowFilter}>
           <ion-icon
             name="filter-outline"
             className="filter-icon"
@@ -116,11 +113,7 @@ const FilterSearch = ({}) => {
           ></ion-icon>
           <span style={{ marginLeft: "10px" }}>Filter</span>
         </div>
-        <div
-          className="filter-mobile-header"
-          onClick={handleShow}
-          style={{ cursor: "pointer" }}
-        >
+        <div className="filter-mobile-header" onClick={handleShow}>
           <ion-icon
             name="filter-outline"
             className="filter-icon"
@@ -142,48 +135,15 @@ const FilterSearch = ({}) => {
                 <Accordion.Header>Category</Accordion.Header>
                 <Accordion.Body>
                   <Form>
-                    <span
-                      style={{
-                        marginBottom: "15px",
-                        display: "inline-block",
-                        fontWeight: "500",
-                      }}
-                    >
-                      Plants
-                    </span>
-                    {plantCategories.length
-                      ? plantCategories.map((category) => {
+                    {allCategories.length
+                      ? allCategories.map((category) => {
                           return (
                             <Form.Check
-                              key={`${category.categoryfamilyId}-${category.id}`}
+                              key={category.id}
                               type={"checkbox"}
                               label={category.name}
                               id={category.id}
-                              value={category?.id}
-                              checked={checkedState[category.id] || false}
-                              onChange={() => handleOnChangeCheck(category.id)}
-                            />
-                          );
-                        })
-                      : null}
-                    <span
-                      style={{
-                        margin: "15px 0",
-                        display: "inline-block",
-                        fontWeight: "500",
-                      }}
-                    >
-                      Accesories
-                    </span>
-                    {accesoriesCategories.length
-                      ? accesoriesCategories.map((category) => {
-                          return (
-                            <Form.Check
-                              key={`${category.categoryfamilyId}-${category.id}`}
-                              type={"checkbox"}
-                              label={category.name}
-                              id={category.id}
-                              value={category?.id}
+                              value={category.id}
                               checked={checkedState[category.id] || false}
                               onChange={() => handleOnChangeCheck(category.id)}
                             />
@@ -214,46 +174,11 @@ const FilterSearch = ({}) => {
                   <Accordion.Header>Category</Accordion.Header>
                   <Accordion.Body>
                     <Form>
-                      <span
-                        style={{
-                          marginBottom: "15px",
-                          display: "inline-block",
-                          fontWeight: "500",
-                        }}
-                      >
-                        Plants
-                      </span>
-                      {plantCategories.length
-                        ? plantCategories.map((category) => {
+                      {allCategories.length
+                        ? allCategories.map((category) => {
                             return (
                               <Form.Check
-                                key={`${category.categoryfamilyId}-${category.id}`}
-                                type={"checkbox"}
-                                label={category.name}
-                                id={category.id}
-                                value={category.id}
-                                checked={checkedState[category.id] || false}
-                                onChange={() =>
-                                  handleOnChangeCheck(category.id)
-                                }
-                              />
-                            );
-                          })
-                        : null}
-                      <span
-                        style={{
-                          margin: "15px 0",
-                          display: "inline-block",
-                          fontWeight: "500",
-                        }}
-                      >
-                        Accesories
-                      </span>
-                      {accesoriesCategories.length
-                        ? accesoriesCategories.map((category) => {
-                            return (
-                              <Form.Check
-                                key={`${category.categoryfamilyId}-${category.id}`}
+                                key={category.id}
                                 type={"checkbox"}
                                 label={category.name}
                                 id={category.id}
@@ -276,8 +201,7 @@ const FilterSearch = ({}) => {
         <div className="filtered-div">
           <div className="pagination">
             <span>
-              {products.length} {products.length === 1 ? "Result" : "Results"}{" "}
-              found
+              {products.length} {products.length === 1 ? "Result" : "Results"}
             </span>
             {/* <div>
             <button>1</button>
@@ -295,4 +219,4 @@ const FilterSearch = ({}) => {
   );
 };
 
-export default FilterSearch;
+export default FilterSearchCategory;
