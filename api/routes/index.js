@@ -13,6 +13,7 @@ const productComment = require("./productComment");
 const productValoration = require("./productValoration");
 
 const category = require("./category");
+const categoryFamily = require("./categoryFamily")
 
 router.use("/user", user);
 router.use("/product", product);
@@ -26,6 +27,8 @@ router.use("/productComment", productComment);
 
 router.use("/itemCart", itemCart);
 router.use("/category", category);
+router.use("/categoryFamily", categoryFamily);
+
 router.use("/productValoration", productValoration);
 
 module.exports = router;
