@@ -1,4 +1,4 @@
-.orderContainer2{
+/* .orderContainer2{
     display: grid;
     margin: 20px;
     justify-content: space-around;
@@ -12,4 +12,21 @@
 
 .text00001{
     margin: 1%
+} */
+
+.cart-title {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+
+@media (min-width: 500px) {
+    
+.cart-title {
+    flex-direction: row;
+    justify-content: space-between;
+  }
 }
