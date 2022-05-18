@@ -25,7 +25,6 @@ const RegisterModal = () => {
 
   const handleRegister = (e) => {
     e.preventDefault();
-    console.log(`en handle register`);
     if (!validateString(first_name.value)) return;
     if (!validateString(last_name.value)) return;
     if (!validateEmail(email.value)) return;
@@ -33,7 +32,6 @@ const RegisterModal = () => {
       setPasswordError(true);
       return;
     }
-    console.log(`aqui no`);
     setPasswordError(false);
 
     dispatch(
@@ -50,17 +48,21 @@ const RegisterModal = () => {
         )
       )
       .then((data) => {
-        setLoading(false)
+        setLoading(false);
         console.log(`result es`, data);
         setShow(false);
       });
-      setLoading(true)
+    setLoading(true);
   };
   //
 
   return (
     <>
-      <Button variant="success" onClick={handleShow} style={{ width: "80%" }}>
+      <Button
+        variant="success"
+        onClick={handleShow}
+        style={{ width: "100%", margin: 0 }}
+      >
         Register
       </Button>
 
@@ -76,8 +78,8 @@ const RegisterModal = () => {
               </label>
               <input
                 type="text"
-                minlength="2"
-                maxlength="30"
+                minLength="2"
+                maxLength="30"
                 className="form-control"
                 id="recipient-name"
                 required
@@ -85,22 +87,22 @@ const RegisterModal = () => {
               />
             </div>
             <div className="mb-3">
-              <label htmlFor="recipient-name" className="col-form-label">
+              <label htmlFor="recipient-lastname" className="col-form-label">
                 Apellido
               </label>
               <input
                 type="text"
                 className="form-control"
-                id="recipient-name"
-                minlength="2"
-                maxlength="30"
+                id="recipient-lastname"
+                minLength="2"
+                maxLength="30"
                 required
                 {...last_name}
               />
             </div>
             <div className="mb-3">
               <label
-                htmlFor="recipient-name"
+                htmlFor="recipient-email"
                 className="col-form-label"
                 data-error="wrong"
                 data-success="right"
@@ -110,20 +112,20 @@ const RegisterModal = () => {
               <input
                 type="email"
                 className="form-control validate"
-                id="recipient-name"
+                id="recipient-email"
                 {...email}
                 required
               />
             </div>
             <div className="mb-3">
-              <label htmlFor="recipient-name" className="col-form-label">
+              <label htmlFor="recipient-password" className="col-form-label">
                 Contraseña
               </label>
               <input
                 type="password"
                 className="form-control"
                 required
-                id="recipient-name"
+                id="recipient-password"
                 {...password}
               />
               {passwordError && (
@@ -132,9 +134,9 @@ const RegisterModal = () => {
                 </div>
               )}
             </div>
-            {loading  && (
+            {loading && (
               <div style={{ textAlign: "center", margin: "20px 0 -15px 0" }}>
-                <Spinner animation="border" variant="secondary" />{" "}
+                <Spinner animation="border" variant="secondary" />
               </div>
             )}
             <Modal.Footer style={{ marginTop: "40px" }}>

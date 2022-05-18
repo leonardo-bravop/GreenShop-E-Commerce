@@ -5,24 +5,39 @@ import "../style/Login.css";
 import RegisterModal from "./RegisterModal";
 import { useDispatch, useSelector } from "react-redux";
 import { sendLogoutRequest } from "../state/user";
+import { resetShoppingCart } from "../state/shoppingCart";
+import { resetItemCarts } from "../state/itemCart";
+import { useNavigate } from "react-router";
 
 const UserDropdown = () => {
-
   const dispatch = useDispatch();
-  const user = useSelector(state => state.user);
+  const user = useSelector((state) => state.user);
+  const navigate=useNavigate()
   const handleLogout = () => {
-    dispatch(sendLogoutRequest());
+    dispatch(sendLogoutRequest())
+      .then(() => {
+        console.log(`en then antes de reset shopping cart`);
+        return dispatch(resetShoppingCart());
+      })
+      .then(() => {
+        return dispatch(resetItemCarts());
+      }).then(()=>{
+        navigate("/")
+      })
   };
 
   return (
     // <div style={{"overflowY": "hidden"}}>
     <div className="user-div">
       <Dropdown align={"end"}>
-        <Dropdown.Toggle id="dropdown-basic" variant="secondary">
+        <Dropdown.Toggle
+          id="dropdown-basic"
+          variant={user.id ? "success" : "secondary"}
+        >
           <ion-icon name="person-outline"></ion-icon>
         </Dropdown.Toggle>
 
-        <Dropdown.Menu>
+        <Dropdown.Menu style={{ textAlign: "center" }}>
           {!user.id ? (
             <>
               <Dropdown.ItemText>
@@ -33,9 +48,16 @@ const UserDropdown = () => {
               </Dropdown.ItemText>
             </>
           ) : (
-            <Dropdown.ItemText>
-              <Button onClick={handleLogout} variant="danger">Logout</Button>
-            </Dropdown.ItemText>
+            <>
+              <Dropdown.ItemText>
+                <span>{user.name}</span>
+              </Dropdown.ItemText>
+              <Dropdown.ItemText>
+                <Button onClick={handleLogout} variant="danger">
+                  Logout
+                </Button>
+              </Dropdown.ItemText>
+            </>
           )}
         </Dropdown.Menu>
       </Dropdown>

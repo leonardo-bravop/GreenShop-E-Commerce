@@ -7,6 +7,7 @@ import { validateEmail } from "../utils/InputValidations";
 
 const LoginModal = () => {
   const [loading, setLoading] = useState(false);
+  const [loginError, setLoginError] = useState(false);
 
   //Modal utils
   const [show, setShow] = useState(false);
@@ -34,6 +35,7 @@ const LoginModal = () => {
     ).then((data) => {
       setLoading(false);
       if (data.payload) setShow(false);
+      if (data.error) setLoginError(true);
     });
     setLoading(true);
   };
@@ -41,13 +43,17 @@ const LoginModal = () => {
 
   return (
     <>
-      <Button variant="outline-success" onClick={handleShow} style={{ width: "80%" }}>
+      <Button
+        variant="outline-success"
+        onClick={handleShow}
+        style={{ width: "100%", margin: 0 }}
+      >
         Login
       </Button>
 
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
-          <Modal.Title> Iniciar sesión</Modal.Title>
+          <Modal.Title> Login</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <form onSubmit={handleLogin}>
@@ -69,7 +75,7 @@ const LoginModal = () => {
               <input
                 type="password"
                 className="form-control"
-                id="recipient-name"
+                id="recipient-password"
                 {...password}
               />
             </div>
@@ -78,6 +84,10 @@ const LoginModal = () => {
                 <Spinner animation="border" variant="secondary" />{" "}
               </div>
             )}
+            {loginError && (
+              <p style={{ color: "red" }}>Invalid e-mail or password</p>
+            )}
+
             <Modal.Footer style={{ marginTop: "40px" }}>
               <Button variant="secondary" onClick={handleClose}>
                 Close
