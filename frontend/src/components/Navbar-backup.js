@@ -10,7 +10,7 @@ import axios from "axios";
 
 const Navbar = ({ setProducts }) => {
   const user = useSelector((state) => state.user);
-  const searchValue = useInput();
+  const searchValue = useInput("");
   const handleSubmit = (e) => {
     e.preventDefault();
     if (searchValue.value !== "") {
