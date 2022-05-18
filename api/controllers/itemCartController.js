@@ -1,19 +1,14 @@
-const ItemCart = require('../models/CartItem');
-const { Product } = require('../models');
+const ItemCart = require("../models/CartItem");
+const { Product } = require("../models");
 
-exports.postOrAdd = (req, res) => {
+exports.postOrAdd = (req, res, next) => {
   const { quantity, productId, ShoppingCartId } = req.body;
-  console.log(
-    'soy el req body que te llegó',
-    quantity,
-    productId,
-    ShoppingCartId
-  );
+
   ItemCart.findOrCreate({
     where: { productId, ShoppingCartId },
     defaults: { quantity },
   })
-    .then(itemCart => {
+    .then((itemCart) => {
       return ItemCart.update(
         { quantity },
         {
@@ -23,25 +18,41 @@ exports.postOrAdd = (req, res) => {
         }
       );
     })
-    .then(data => {
+    .then((data) => {
       res.send(data[1]);
+    })
+    .catch((error) => {
+      next(error);
     });
 };
 
-exports.getAll = (req, res) => {
+exports.getAll = (req, res, next) => {
   const { id } = req.params;
 
   ItemCart.findAll({
     where: { ShoppingCartId: id },
     include: { model: Product },
-  }).then(data => {
-    res.send(data);
-  });
+  })
+    .then((items) => {
+      items.sort((a, b) => {
+        return a.id - b.id;
+      });
+
+      console.log(`items son`, items);
+      res.send(items);
+    })
+    .catch((error) => {
+      next(error);
+    });
 };
 
-exports.delete = (req, res) => {
+exports.delete = (req, res, next) => {
   const { id } = req.params;
   ItemCart.destroy({
     where: { id },
-  }).then(() => res.send(204));
+  })
+    .then(() => res.sendStatus(204))
+    .catch((error) => {
+      next(error);
+    });
 };

@@ -75,12 +75,13 @@ passport.deserializeUser(function (id, done) {
     .catch(done);
 });
 
-app.get("/", (req, res) => {
+app.get("/", (req, res, next) => {
   res.send("GreenShop API is running...");
 });
 
 app.use("/api", routes);
 
+//Error middleware
 app.use(function (err, req, res, next) {
   console.error(err);
   res.status(500).send(err);
