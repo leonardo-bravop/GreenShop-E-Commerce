@@ -1,23 +1,22 @@
-const { Model, DataTypes } = require('sequelize')
-const db = require('../db')
-
+const { Model, DataTypes } = require("sequelize");
+const db = require("../db");
 
 class ProductValoration extends Model {}
 
 ProductValoration.init(
-    {
-        valoration:{
-            type: DataTypes.INTEGER,
-            allowNull: true,
-        },
-        userId:{
-            type: DataTypes.INTEGER,
-            
-        },
+  {
+    valoration: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
     },
-    {
-        sequelize: db,
-        modelName: 'productvaloration'
-    })
+    review: {
+      type: DataTypes.TEXT,
+    },
+  },
+  {
+    sequelize: db,
+    modelName: "productvaloration",
+  }
+);
 
-    module.exports = ProductValoration; 
+module.exports = ProductValoration;

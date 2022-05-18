@@ -1,24 +1,24 @@
-const Address = require('./Address');
-const CartItem = require('./CartItem');
-const Category = require('./Category');
-const OrderDetail = require('./OrderDetail');
-const OrderItem = require('./OrderItem');
-const PaymentDetail = require('./PaymentDetail');
-const Product = require('./Product');
-const ShoppingCart = require('./ShoppingCart');
-const User = require('./User');
-const Role = require('./Role');
-const ProductComment = require('./ProductComment');
-const ProductValoration = require('./ProductValoration');
+const Address = require("./Address");
+const CartItem = require("./CartItem");
+const Category = require("./Category");
+const OrderDetail = require("./OrderDetail");
+const OrderItem = require("./OrderItem");
+const PaymentDetail = require("./PaymentDetail");
+const Product = require("./Product");
+const ShoppingCart = require("./ShoppingCart");
+const User = require("./User");
+const Role = require("./Role");
+// const ProductComment = require("./ProductComment");
+const ProductValoration = require("./ProductValoration");
+const CategoryFamily = require("./CategoryFamily");
 
-
-ProductComment.belongsTo(Product);
-Product.hasMany(ProductComment)
-
+// ProductComment.belongsTo(Product);
+// Product.hasMany(ProductComment);
 
 ProductValoration.belongsTo(Product);
 Product.hasMany(ProductValoration);
-
+ProductValoration.belongsTo(User)
+User.hasMany(ProductValoration)
 
 ShoppingCart.belongsTo(User);
 User.hasOne(ShoppingCart);
@@ -43,12 +43,19 @@ OrderDetail.hasMany(OrderItem);
 OrderDetail.belongsTo(User);
 User.hasMany(OrderDetail);
 
-
 PaymentDetail.belongsTo(OrderDetail);
 
-Product.belongsToMany(Category, {as: 'categorias', through: 'product_category'})
-Category.belongsToMany(Product, {as: 'productos', through: 'product_category'})
+Product.belongsToMany(Category, {
+  as: "categorias",
+  through: "product_category",
+});
+Category.belongsToMany(Product, {
+  as: "productos",
+  through: "product_category",
+});
 
+Category.belongsTo(CategoryFamily);
+CategoryFamily.hasMany(Category);
 
 module.exports = {
   User,
@@ -56,11 +63,12 @@ module.exports = {
   Address,
   CartItem,
   Category,
+  CategoryFamily,
   OrderDetail,
   OrderItem,
   PaymentDetail,
   ShoppingCart,
-  ProductComment,
+  // ProductComment,
   ProductValoration,
-  Role
+  Role,
 };
