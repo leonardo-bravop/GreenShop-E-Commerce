@@ -1,40 +1,28 @@
-import '../style/Grid.css';
-import { Link } from 'react-router-dom';
+import "../style/Grid.css";
+import { Link } from "react-router-dom";
+import { addComasToPrice } from "../utils/PriceFormat";
 
 const Card = ({ data }) => {
   return (
-    <div className='card'>
-      <div className='card-body'>
-        <h5 className='card-title'>{data.name}</h5>
-        <div className='image-grid-container'>
-          <Link to={`/product/${data.id}`}>
-            <img
-              className='card-img'
-              src={
-                data.img
-                  ? data.img[0]
-                  : 'https://peugeot.navigation.com/static/WFS/Shop-Site/-/Shop/en_US/Product%20Not%20Found.png'
-              }
-              alt='Card image cap'
-            />
-          </Link>
-        </div>
-        <div className='container-grid'>
-          <Link to={`/product/${data.id}`}>
-            <div>
-              <button type='button' className='buttonItem'>
-                Ver detalles
-              </button>
-            </div>
-          </Link>
-        </div>
+    <Link to={`/product/${data.id}`} className="product-card">
+      <div className="card-img-container">
+        <img
+          className="card-img"
+          src={
+            data.img
+              ? data.img[0]
+              : "https://peugeot.navigation.com/static/WFS/Shop-Site/-/Shop/en_US/Product%20Not%20Found.png"
+          }
+          alt="Card image cap"
+        />
       </div>
-      <div className='card-content'>
-        <div className='media'>
-          <div className='media-left'></div>
+      <div className="card-info">
+        <div className="product-card-title">
+          {data.name.length > 30 ? data.name.slice(0, 30) + "..." : data.name}
         </div>
+        <div style={{ fontSize: "1.4em" }}>$ {addComasToPrice(data.price)}</div>
       </div>
-    </div>
+    </Link>
   );
 };
 
