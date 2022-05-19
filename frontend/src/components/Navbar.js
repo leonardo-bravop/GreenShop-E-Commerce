@@ -1,205 +1,198 @@
-import React from "react";
-import { Link } from "react-router-dom";
-
-import { Sidebar } from "./Sidebar";
-import { Login } from "./Login";
+import React, { useEffect, useState } from "react";
+import {
+  Button,
+  Container,
+  Nav,
+  Navbar,
+  NavDropdown,
+  Offcanvas,
+} from "react-bootstrap";
+import { Link, useNavigate } from "react-router-dom";
 import "../style/Navbar.css";
-import { useSelector } from "react-redux";
-import useInput from "../hooks/useInput";
+import UserDropdown from "./UserDropdown";
+import Sidebar from "./Sidebar";
 import axios from "axios";
+import useInput from "../hooks/useInput";
+import { useSelector } from "react-redux";
 
-const Navbar = ({ setProducts }) => {
+const NavbarComp = () => {
   const user = useSelector((state) => state.user);
-  const searchValue = useInput();
+  const [categoryFamilies, setCategoryFamilies] = useState([]);
+  const navigate = useNavigate();
+
+  const [show, setShow] = useState(false);
+  const handleClose = () => setShow(false);
+
+  const [visibleSearch, setVisibleSearch] = useState(false);
+  const searchValue = useInput("");
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (searchValue.value !== "") {
-      axios
-        .get(`/api/product/name/${searchValue.value}`)
-        .then((res) => setProducts(res.data));
+    if (searchValue.value && searchValue.value.trim()) {
+      navigate(`/search/value/${searchValue.value.trim()}`);
+      document.querySelector(".search-form").value = "";
+      searchValue.onChange(e);
+      handleClose();
     }
   };
+  const handleVisible = () => {
+    setVisibleSearch(!visibleSearch);
+  };
+
+  useEffect(() => {
+    axios.get("/api/categoryFamily/getAllCategories").then(({ data }) => {
+      const orderedFamilies = data.sort((a, b) => b.name.localeCompare(a.name));
+      setCategoryFamilies(data);
+    });
+  }, []);
+
+  const handleShow = () => setShow(true);
 
   return (
-    <div className="shadow" style={{ backgroundColor: "#f8f9fa" }}>
-      <nav className="navbar navbar-expand-lg navbar-light bg-light">
-        <div className="container-fluid">
-          <Link to="/" className="navbar-brand title">
-            Sativa
-          </Link>
-          <button
-            className="navbar-toggler"
-            type="button"
-            data-bs-toggle="collapse"
-            data-bs-target="#navbarSupportedContent"
-            aria-controls="navbarSupportedContent"
-            aria-expanded="false"
-            aria-label="Toggle navigation"
-          >
-            <span className="navbar-toggler-icon"></span>
-          </button>
-          <div className="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul className="navbar-nav me-auto mb-2 mb-lg-0">
-              <div className="dropdown1">
-                <li className="nav-item dropdown">
-                  <a
-                    className="nav-link dropdown-toggle"
-                    href="#"
-                    id="navbarDropdown"
-                    role="button"
-                    data-bs-toggle="dropdown"
-                    aria-expanded="false"
+    <>
+      <div className="navbar-container">
+        <Link to="/" className="title">
+          GreenShop
+        </Link>
+
+        <Navbar bg="light" expand={"xl"} style={{ flex: 1 }}>
+          <Container fluid style={{ paddingRight: "0" }}>
+            <Navbar.Toggle
+              aria-controls={`offcanvasNavbar-expand-${"lg"}`}
+              style={{ position: "absolute", marginLeft: "10px" }}
+              onClick={handleShow}
+            />
+            <Navbar.Offcanvas
+              id={`offcanvasNavbar-expand-${"lg"}`}
+              aria-labelledby={`offcanvasNavbarLabel-expand-${"lg"}`}
+              placement="start"
+              show={show ? "true" : null}
+              onHide={handleClose}
+            >
+              <Offcanvas.Header closeButton></Offcanvas.Header>
+              <Offcanvas.Body>
+                <Nav className="justify-content-center flex-grow-1 pe-3 centered-nav">
+                  <Link
+                    to={`/products/all`}
+                    className="nav-link"
+                    style={{ textDecoration: "none", marginInline: "5px" }}
+                    onClick={handleClose}
                   >
-                    GROWSHOP
-                  </a>
-                  <ul
-                    className="dropdown-menu"
-                    aria-labelledby="navbarDropdown"
-                  >
-                    <li>
-                      <Link to={`/products/popular`}>
-                        <a className="dropdown-item" href="#">
-                          Productos Populares
-                        </a>
+                    PRODUCTS
+                  </Link>
+                  {categoryFamilies.map((categoryFamily) => {
+                    return (
+                      <NavDropdown
+                        title={categoryFamily.name.toUpperCase()}
+                        id={`offcanvasNavbarDropdown-expand-${"lg"}`}
+                        key={categoryFamily.id}
+                        style={{ marginInline: "5px" }}
+                      >
+                        {categoryFamily.categories.map((category) => {
+                          return (
+                            <Link
+                              to={`/${
+                                categoryFamily.name
+                              }/${category.name.replace(" ", "_")}`}
+                              className="category-navlink"
+                              key={category.id}
+                              onClick={handleClose}
+                            >
+                              {category.name}
+                            </Link>
+                          );
+                        })}
+                      </NavDropdown>
+                    );
+                  })}
+
+                  {user.roleId === 2 || user.roleId === 3 ? (
+                    <NavDropdown
+                      title="ADMIN"
+                      id="admin-dropdown"
+                      style={{ marginInline: "5px" }}
+                    >
+                      <Link
+                        to={`/admin/products`}
+                        className="admin-dropitem"
+                        onClick={handleClose}
+                      >
+                        Products
                       </Link>
-                    </li>
-                    <li>
-                      <a className="dropdown-item" href="#">
-                        catalogo 2
-                      </a>
-                    </li>
-                  </ul>
-                </li>
+                      <Link
+                        to={`/admin/users`}
+                        className="admin-dropitem"
+                        onClick={handleClose}
+                      >
+                        Users
+                      </Link>
+                      <Link
+                        to={`/admin/orders`}
+                        className="admin-dropitem"
+                        onClick={handleClose}
+                      >
+                        Orders
+                      </Link>
+                      <Link
+                        to={`/admin/categories`}
+                        className="admin-dropitem"
+                        onClick={handleClose}
+                      >
+                        Categories
+                      </Link>
+                    </NavDropdown>
+                  ) : null}
+                </Nav>
+                <div id="mobile-searchform">
+                  <form className="d-flex search-form" onSubmit={handleSubmit}>
+                    <input
+                      className="form-control me-2 search-input"
+                      type="search"
+                      placeholder="Search"
+                      aria-label="Search"
+                      {...searchValue}
+                    />
 
-                <li className="nav-item dropdown">
-                  <a
-                    className="nav-link dropdown-toggle"
-                    href="#"
-                    id="navbarDropdown"
-                    role="button"
-                    data-bs-toggle="dropdown"
-                    aria-expanded="false"
-                  >
-                    COMBOS
-                  </a>
-                  <ul
-                    className="dropdown-menu"
-                    aria-labelledby="navbarDropdown"
-                  >
-                    <li>
-                      <a className="dropdown-item" href="#">
-                        combo invierno
-                      </a>
-                    </li>
-                    <li>
-                      <a className="dropdown-item" href="#">
-                        combo verano
-                      </a>
-                    </li>
-                  </ul>
-                </li>
-
-                <li className="nav-item dropdown">
-                  <a
-                    className="nav-link dropdown-toggle"
-                    href="#"
-                    id="navbarDropdown"
-                    role="button"
-                    data-bs-toggle="dropdown"
-                    aria-expanded="false"
-                  >
-                    NOSOTROS
-                  </a>
-                  <ul
-                    className="dropdown-menu"
-                    aria-labelledby="navbarDropdown"
-                  >
-                    <li>
-                      <a className="dropdown-item" href="#">
-                        nuestra historia
-                      </a>
-                    </li>
-                    <li>
-                      <a className="dropdown-item" href="#">
-                        nuestra mision
-                      </a>
-                    </li>
-                  </ul>
-                </li>
-
-                {user.roleId === 2 || user.roleId === 3 ? (
-                  <li className="nav-item dropdown">
-                    <a
-                      className="nav-link dropdown-toggle"
-                      href="#"
-                      id="adminDropdown"
-                      role="button"
-                      data-bs-toggle="dropdown"
-                      aria-expanded="false"
-                      style={{ backgroundColor: "#008200", color: "white" }}
+                    <Button
+                      className="iconNavbar"
+                      id="search-button"
+                      type="submit"
+                      variant="success"
                     >
-                      ADMIN
-                    </a>
-                    <ul
-                      className="dropdown-menu"
-                      aria-labelledby="navbarDropdown"
+                      <ion-icon name="search-outline"></ion-icon>
+                    </Button>
+                  </form>
+                </div>
+                <div id="desktop-searchform">
+                  <form className="d-flex search-form" onSubmit={handleSubmit}>
+                    {visibleSearch && (
+                      <input
+                        className="form-control me-2 search-input"
+                        type="search"
+                        placeholder="Search"
+                        aria-label="Search"
+                        {...searchValue}
+                      />
+                    )}
+                    <Button
+                      className="iconNavbar"
+                      id="search-button"
+                      type="submit"
+                      variant="success"
+                      onClick={handleVisible}
                     >
-                      <li>
-                        <Link to={`/admin/users`} className="dropdown-item">
-                          Usuarios
-                        </Link>
-                      </li>
-
-                      <li>
-                        <Link to={`/admin/orders`} className="dropdown-item">
-                          Órdenes
-                        </Link>
-                      </li>
-                      <li>
-                        <Link to={`/admin/products`} className="dropdown-item">
-                          Productos
-                        </Link>
-                      </li>
-                      <li>
-                        <Link
-                          to={`/admin/categories`}
-                          className="dropdown-item"
-                        >
-                          Categorías
-                        </Link>
-                      </li>
-                    </ul>
-                  </li>
-                ) : (
-                  <></>
-                )}
-              </div>
-            </ul>
-            <form className="d-flex" onSubmit={handleSubmit}>
-              <input
-                className="form-control me-2"
-                type="search"
-                placeholder="Search"
-                aria-label="Search"
-                {...searchValue}
-              />
-              <a className="iconNavbar" type="submit">
-                <ion-icon name="search-outline"></ion-icon>
-              </a>
-            </form>
-          </div>
-          {user.id ? (
-            <div>
-              <span>{user.name}</span>
-            </div>
-          ) : null}
-        </div>
-      </nav>
-
-      <Login />
-      <Sidebar />
-    </div>
+                      <ion-icon name="search-outline"></ion-icon>
+                    </Button>
+                  </form>
+                </div>
+              </Offcanvas.Body>
+            </Navbar.Offcanvas>
+          </Container>
+        </Navbar>
+        <Sidebar />
+        <UserDropdown />
+      </div>
+    </>
   );
 };
 
-export default Navbar;
+export default NavbarComp;

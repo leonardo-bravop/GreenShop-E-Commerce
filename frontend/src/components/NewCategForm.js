@@ -1,4 +1,5 @@
 import axios from "axios";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import { Link } from "react-router-dom";
 import useInput from "../hooks/useInput";
@@ -8,11 +9,28 @@ const NewCategForm = () => {
 
   const name = useInput("");
   const description = useInput("");
+  const [checkedState, setCheckedState] = useState("");
+  const [categoryFamilies, setCategoryFamilies] = useState([]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-   axios.post("/api/category/new", { name: name.value, description: description.value })
+    axios
+      .post("/api/category/new", {
+        name: name.value,
+        description: description.value,
+        categoryfamilyId: checkedState,
+      })
       .then(() => navigate("/admin/categories"));
+  };
+
+  useEffect(() => {
+    axios.get("/api/categoryFamily/getAll").then(({ data }) => {
+      setCategoryFamilies(data);
+    });
+  }, []);
+
+  const handleOnChangeCheck = (e) => {
+    setCheckedState(e.target.value);
   };
 
   return (
@@ -38,8 +56,26 @@ const NewCategForm = () => {
               {...name}
             />
           </div>
+          <div style={{ marginBottom: "5px" }}>
+            <span>Category family:</span>
+          </div>
+          {categoryFamilies.map((family) => {
+            return (
+              <div>
+                <input
+                  type="radio"
+                  name={family.name}
+                  value={family.id}
+                  checked={checkedState == family.id}
+                  id={family.name}
+                  // checked={checkedState[category.id]}
+                  onChange={handleOnChangeCheck}
+                />
+                <label style={{ marginLeft: "6px" }}>{family.name}</label>
+              </div>
+            );
+          })}
 
-       
           <div className="d-flex flex-column labelAndInput">
             <label htmlFor="description">Descripción:</label>
             <textarea type="text" placeholder="Description" {...description} />

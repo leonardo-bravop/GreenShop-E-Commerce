@@ -1,16 +1,17 @@
-const OrderDetail = require('../models/OrderDetail');
+const OrderDetail = require("../models/OrderDetail");
 
-exports.add = (req, res) => {
+exports.add = (req, res, next) => {
   const { UserId, total } = req.body;
-  console.log('MIREQ.BODY', req.body);
-  OrderDetail.create({ UserId, total, status: 'pending' }).then(
-    newOrderDetail => {
+  OrderDetail.create({ UserId, total, status: "pending" })
+    .then((newOrderDetail) => {
       res.send(newOrderDetail);
-    }
-  );
+    })
+    .catch((error) => {
+      next(error);
+    });
 };
 
-exports.update = (req, res) => {
+exports.update = (req, res, next) => {
   const { id } = req.params;
   OrderDetail.update(req.body, {
     where: {
@@ -18,22 +19,32 @@ exports.update = (req, res) => {
     },
     returning: true,
     plain: true,
-  }).then(result => {
-    const user = result[1];
-    res.status(201).json({
-      user,
+  })
+    .then((result) => {
+      const user = result[1];
+      res.status(201).json({
+        user,
+      });
+    })
+    .catch((error) => {
+      next(error);
     });
-  });
 };
 
-exports.getAll = (req, res) => {
+exports.getAll = (req, res, next) => {
   const { UserId } = req.params;
-  OrderDetail.findAll({ where: { UserId } }).then(orders => res.send(orders));
+  OrderDetail.findAll({ where: { UserId } })
+    .then((orders) => res.send(orders))
+    .catch((error) => {
+      next(error);
+    });
 };
 
-exports.getOne = (req, res) => {
-  const { id } = req.params;
-
-  console.log('soy el id', id);
-  OrderDetail.findOne({ where: { id } }).then(order => res.send(order));
+exports.getOne = (req, res, next) => {
+  const { id, UserId } = req.params;
+  OrderDetail.findOne({ where: { id, UserId } })
+    .then((order) => res.send(order))
+    .catch((error) => {
+      next(error);
+    });
 };

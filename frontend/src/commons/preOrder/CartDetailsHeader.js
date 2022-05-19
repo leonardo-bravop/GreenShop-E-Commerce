@@ -1,24 +1,26 @@
-import { useSelector } from 'react-redux';
-import '../../style/CardOrderDetail.css';
-import '../SingleProduct.css';
-import CartItems from './CartItems';
+import { Button, Table } from "react-bootstrap";
+import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
+import "../../style/CardOrderDetail.css";
+import "../SingleProduct.css";
+import CartItems from "./CartItems";
+import {HiArrowNarrowLeft} from "react-icons/hi"
 
 const CartDetailsHeader = () => {
-  const shoppingCart = useSelector(state => state.shoppingCart);
+  const shoppingCart = useSelector((state) => state.shoppingCart);
 
   return shoppingCart.id ? (
-    <div className='orderContainer2'>
-      <h5 className=''>ShoppingCart</h5>
-      <div className=''>
-        <div>
-          <div>Total Price: $ {shoppingCart.total}</div>
-          <div>Order Date: {shoppingCart.updatedAt}</div>
-        </div>
+    <div className="orderContainer2">
+      <div className="cart-title">
+        <span className="" style={{fontSize: "1.4em", fontWeight: "500", marginBottom: "10px"}}>ShoppingCart</span>
+        <Link to="/products/all" style={{textDecoration: "none"}}>
+          <Button style={{ display: "flex", alignItems: "center", margin: 0 }} variant="outline-primary">
+            <HiArrowNarrowLeft style={{marginRight: "10px"}}/>Continue Shopping
+          </Button>
+        </Link>
       </div>
-
-      <div className='orderContainer2'>
-        <CartItems />
-      </div>
+      <CartItems />
+     
     </div>
   ) : null;
 };

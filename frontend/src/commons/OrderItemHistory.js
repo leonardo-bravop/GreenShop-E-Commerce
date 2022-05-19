@@ -11,9 +11,9 @@ const OrderItem = ({ data, id }) => {
       <Table bordered hover>
         <tbody>
           <button className='btn btn-'>Modificar</button>
-          <h2 class='accordion-header'>
+          <h2 className='accordion-header'>
             <button
-              class='accordion-button'
+              className='accordion-button'
               type='button'
               data-bs-toggle='collapse'
               data-bs-target={`#collapse${id}`}
@@ -21,7 +21,7 @@ const OrderItem = ({ data, id }) => {
               aria-controls={`collapse${id}`}
             >
               <div classname='orderContainer3'>
-                <div class='accordion'>
+                <div className='accordion'>
                   <span>Order N. {data.order_id} |</span>
                   <span>| $.{data.payment_id} |</span>
                   <span>| Date: {data.created_at}</span>
@@ -31,15 +31,15 @@ const OrderItem = ({ data, id }) => {
           </h2>
           <div
             id={`collapse${id}`}
-            class='accordion-collapse collapse show'
+            className='accordion-collapse collapse show'
             aria-labelledby='headingOne'
             data-bs-parent='#accordionExample'
           >
-            <div class=''>
+            <div className=''>
               {datas2.map((data2, i) => (
                 <div className='orderContainer3'>
                   <div className=''>
-                    <img class='order-card-img' alt='' src={data2.images} />
+                    <img className='order-card-img' alt='' src={data2.images} />
                     <Link to={`/product/${data2.product_id}`}>
                       {data2.name}
                     </Link>

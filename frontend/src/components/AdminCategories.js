@@ -21,7 +21,6 @@ const AdminCategories = () => {
   const handleClose = () => setShow(false);
 
   const handleDelete = () => {
-    console.log(`Categ ID ES`, auxCategId);
     axios
       .delete(`/api/category/${auxCategId}`)
       .then(() => {
@@ -45,19 +44,19 @@ const AdminCategories = () => {
 
   return (
     <div className="container categoriesDiv">
-      <h1 style={{ paddingBottom: "40px" }}>Categorías</h1>
+      <h1 style={{ paddingBottom: "40px" }}>Categories</h1>
       <Link to={"/admin/categories/new-category"}>
         <button className="btn btn-success" style={{ marginBottom: "40px" }}>
-          Crear categoría
+          New Category
         </button>
-      </Link>   
-      <Table bordered hover>
+      </Link>
+      <Table bordered hover responsive>
         <thead>
           <tr>
             <th>Id</th>
-            <th>Nombre</th>
-            <th>Descripción</th>
-            <th>Acción</th>
+            <th>Name</th>
+            <th>Description</th>
+            <th>Action</th>
           </tr>
         </thead>
         <tbody>
@@ -71,10 +70,14 @@ const AdminCategories = () => {
                   <div className="categoriesCelda">{result.name}</div>
                 </td>
                 <td>
-                  <div className="categoriesCelda">{result.description}</div>
+                  <div className="categoriesCelda description-td">
+                    {result.description.length > 50
+                      ? result.description.slice(0, 50) + "..."
+                      : result.description}
+                  </div>
                 </td>
                 <td>
-                  <div className="categoriesCelda">
+                  <div className="categoriesCelda action-buttons">
                     <button
                       className="btn btn-danger"
                       onClick={() => {
@@ -82,12 +85,12 @@ const AdminCategories = () => {
                         handleShow();
                       }}
                     >
-                      Eliminar
+                      Delete
                     </button>
 
                     <Modal show={show} onHide={handleClose}>
                       <Modal.Header closeButton>
-                        <Modal.Title>Confirmar eliminar categoría?</Modal.Title>
+                        <Modal.Title>Confirm delete category?</Modal.Title>
                       </Modal.Header>
                       <Modal.Footer>
                         <button
@@ -100,7 +103,7 @@ const AdminCategories = () => {
                           className="btn btn-danger"
                           onClick={handleDelete}
                         >
-                          Eliminar
+                          Confirm
                         </button>
                       </Modal.Footer>
                     </Modal>
@@ -111,7 +114,7 @@ const AdminCategories = () => {
                         id={result.id}
                         onClick={handleEdit}
                       >
-                        Editar
+                        Edit
                       </button>
                     </Link>
                   </div>

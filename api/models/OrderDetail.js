@@ -1,5 +1,5 @@
-const db = require('../db');
-const { Model, DataTypes } = require('sequelize');
+const db = require("../db");
+const { Model, DataTypes } = require("sequelize");
 //const marked = require("marked");
 
 class OrderDetail extends Model {}
@@ -13,12 +13,12 @@ OrderDetail.init(
     status: {
       type: DataTypes.STRING,
       allowNull: false,
-      defaultValue: 'Pending'
+      defaultValue: "Pending",
     },
   },
   {
     sequelize: db,
-    modelName: 'orderdetails',
+    modelName: "orderdetails",
   }
 );
 

@@ -21,7 +21,6 @@ const NewProductForm = () => {
         categories.forEach((categObj) => {
           auxObj[categObj.id] = false;
         });
-        console.log(`auxobj es`, auxObj);
         setCheckedState(auxObj);
       });
   }, []);
@@ -52,18 +51,19 @@ const NewProductForm = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    const imagesArray = [];
+    if (imagePath1.value) imagesArray.push(imagePath1.value);
+    if (imagePath2.value) imagesArray.push(imagePath2.value);
+    if (imagePath3.value) imagesArray.push(imagePath1.value);
+    if (imagePath4.value) imagesArray.push(imagePath1.value);
+
     axios
       .post("/api/product/add", {
         name: name.value,
         description: description.value,
         price: price.value,
         stock: stock.value,
-        img: [
-          imagePath1.value,
-          imagePath2.value,
-          imagePath3.value,
-          imagePath4.value,
-        ],
+        img: imagesArray,
       })
       .then((res) => {
         const productId = res.data[0].id;
@@ -77,15 +77,11 @@ const NewProductForm = () => {
 
   const handleOnChangeCheck = (categ) => {
     const updatedCheckedState = { ...checkedState };
-    console.log(`updatedcheckstate es`, updatedCheckedState);
-    console.log(`categ es`, categ);
 
     for (const property in updatedCheckedState) {
-      console.log(`property es`, property);
       if (property == categ)
         updatedCheckedState[categ] = !updatedCheckedState[categ];
     }
-    console.log(`updatedcheckstate es`, updatedCheckedState);
 
     setCheckedState(updatedCheckedState);
   };
@@ -100,6 +96,7 @@ const NewProductForm = () => {
             display: "flex",
             flexDirection: "column",
             justifyContent: "center",
+            marginBottom: "50px",
           }}
           onSubmit={handleSubmit}
         >
@@ -119,6 +116,7 @@ const NewProductForm = () => {
               (ARS) $
               <input
                 type="number"
+                step=".01"
                 placeholder="0"
                 min={0}
                 name="price"

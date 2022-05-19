@@ -1,36 +1,42 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
+import { Badge, Button, Offcanvas } from "react-bootstrap";
 
-import Cart from './Cart';
+import Cart from "./Cart";
+import "../style/Sidebar.css";
+import { useSelector } from "react-redux";
 
-export const Sidebar = () => {
+const Sidebar = () => {
+  const [showSidebar, setShowSideBar] = useState(false);
+
+  const handleClose = () => setShowSideBar(false);
+  const handleShow = () => setShowSideBar(true);
+
+  const cartItems = useSelector((state) => state.itemCarts);
+
   return (
-    <div>
-      <a
-        className='iconNavbar'
-        type='button'
-        data-bs-toggle='offcanvas'
-        data-bs-target='#offcanvasRight'
-        aria-controls='offcanvasRight'
+    <div className="cart-nav-div">
+      <Button
+        variant="secondary"
+        onClick={handleShow}
+        style={{ position: "relative" }}
       >
-        <ion-icon name='cart-outline'></ion-icon>
-      </a>
-      <div
-        className='offcanvas offcanvas-end cont'
-        tabindex='-1'
-        id='offcanvasRight'
-        aria-labelledby='offcanvasRightLabel'
-      >
-        <div className='offcanvas-header '>
-          <h5 id='offcanvasRightLabel'>CARRITO DE COMPRAS</h5>
-          <button
-            type='button'
-            className='btn-close text-reset'
-            data-bs-dismiss='offcanvas'
-            aria-label='Close'
-          ></button>
-        </div>
-        <Cart />
-      </div>
+        <ion-icon name="cart-outline"></ion-icon>
+
+        <span style={{ position: "absolute", left: "30px", bottom: "20px" }}>
+          <Badge bg={cartItems.length? "success" : "secondary"}>{cartItems.length}</Badge>
+        </span>
+      </Button>
+
+      <Offcanvas show={showSidebar} onHide={handleClose} placement="end">
+        <Offcanvas.Header closeButton>
+          <Offcanvas.Title>Shopping Cart</Offcanvas.Title>
+        </Offcanvas.Header>
+        <Offcanvas.Body>
+          <Cart setShowSideBar={setShowSideBar}/>
+        </Offcanvas.Body>
+      </Offcanvas>
     </div>
   );
 };
+
+export default Sidebar;

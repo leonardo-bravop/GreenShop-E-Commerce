@@ -13,8 +13,11 @@ router.delete('/deleteRelation',  category.deleteRelation)
 router.put('/updateRelation',  category.updateRelation)
 router.get('/getAll', category.getAll)
 router.get('/productcategories/:id', category.getCatsByProdId)
+router.get("/getbyFamilyId/:familyId", category.getByFamilyId)
+
 
 router.get("/:id", category.getByCategId)
+router.get("/getByName/:name", category.getByName)
 router.delete("/:id", category.deleteByCategId);
 router.put('/:id', category.updateByCategId)
 

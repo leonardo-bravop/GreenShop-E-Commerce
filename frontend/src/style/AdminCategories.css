@@ -1,16 +1,44 @@
 .categoriesDiv {
-    padding-top: 60px;
-    text-align: center;
-    flex: 1;
+  padding-top: 60px;
+  text-align: center;
+  flex: 1;
 }
 
-.categoriesTitle{
-    padding-bottom: 40px;
+.categoriesTitle {
+  padding-bottom: 40px;
 }
 
 .categoriesCelda {
-    height: 50px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  /* height: 50px; */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.action-buttons {
+  flex-direction: column;
+  /* padding: 50px 0; */
+  height: 100%;
+}
+
+.action-buttons > button,
+.action-buttons > a {
+  margin: 5px 0;
+}
+
+.description-td {
+  /* padding: 50px 0; */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@media (min-width: 600px) {
+  .action-buttons {
+    flex-direction: row;
+    padding: 0;
+  }
+  .description-td {
+    padding: 0;
+  }
 }

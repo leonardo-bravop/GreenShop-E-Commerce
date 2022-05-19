@@ -5,9 +5,13 @@
 }
 
 .searchFormDiv {
-    padding: 40px;
+    padding: 40px 10px;
 }
-
+@media (min-width: 600px) {
+    .searchFormDiv {
+        padding: 40px;
+    }
+}
 .searchFormInput {
     height: 50px;
     width: 70%;

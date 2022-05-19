@@ -1,34 +1,36 @@
-import { createReducer, createAsyncThunk } from '@reduxjs/toolkit';
-import axios from 'axios';
+import { createReducer, createAsyncThunk } from "@reduxjs/toolkit";
+import axios from "axios";
 
 export const addOrCreateItemCart = createAsyncThunk(
-  'ADD_OR_CREATE_ITEMCART',
+  "ADD_OR_CREATE_ITEMCART",
   (data, thunkAPI) => {
     const { shoppingCart } = thunkAPI.getState();
     if (shoppingCart.id) {
       return axios.post(`/api/itemCart`, data).then(() => {
-        return axios.get(`/api/itemCart/${shoppingCart.id}`).then(res => {
+        return axios.get(`/api/itemCart/${shoppingCart.id}`).then((res) => {
           const items = res.data;
-          const total = parseInt(
+          const total = parseFloat(
             items
               .map(({ quantity, product }) => quantity * product.price)
               .reduce((total, i) => total + i, 0)
           );
           return axios
             .put(`/api/shoppingCart/total`, { id: shoppingCart.id, total })
-            .then(() => res.data);
+            .then(() => {
+              return res.data;
+            });
         });
       });
     }
   }
 );
 export const deleteItemCart = createAsyncThunk(
-  'REMOVE_ITEMCART',
+  "REMOVE_ITEMCART",
   (id, thunkAPI) => {
     const { shoppingCart } = thunkAPI.getState();
     if (shoppingCart.id) {
       return axios.delete(`/api/itemCart/remove/${id}`).then(() => {
-        return axios.get(`/api/itemCart/${shoppingCart.id}`).then(res => {
+        return axios.get(`/api/itemCart/${shoppingCart.id}`).then((res) => {
           const items = res.data;
           const total = parseInt(
             items
@@ -45,19 +47,29 @@ export const deleteItemCart = createAsyncThunk(
 );
 
 export const getItemCart = createAsyncThunk(
-  'GET_ITEMCARTS',
-  (data, thunkAPI) => {
-    const { shoppingCart } = thunkAPI.getState();
-    if (shoppingCart.id) {
-      return axios.get(`/api/itemCart/${shoppingCart.id}`);
+  "GET_ITEMCARTS",
+  (shoppingCartId, thunkAPI) => {
+    // const { shoppingCart } = thunkAPI.getState();
+    if (shoppingCartId) {
+      return axios.get(`/api/itemCart/${shoppingCartId}`).then(({ data }) => {
+        // if(!data.length) return null
+        return data;
+      });
     }
   }
 );
 
+export const resetItemCarts = createAsyncThunk("RESET_ITEMCARTS", () => {
+  return [];
+});
+
 const itemCartReducer = createReducer([], {
   [addOrCreateItemCart.fulfilled]: (state, action) => action.payload,
-  [getItemCart.fulfilled]: (state, action) => action.payload.data,
+  [getItemCart.fulfilled]: (state, action) => {
+    return action.payload;
+  },
   [deleteItemCart.fulfilled]: (state, action) => action.payload,
+  [resetItemCarts.fulfilled]: (state, action) => action.payload,
 });
 
 export default itemCartReducer;

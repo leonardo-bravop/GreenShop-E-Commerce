@@ -13,11 +13,11 @@ router.put('/modifyStatus/:id', orderDetailController.update);
 
 router.get('/historial/:UserId', orderDetailController.getAll);
 
-router.get('/getorder/:id', orderDetailController.getOne)
+router.get('/getorder/:id/user/:UserId', orderDetailController.getOne)
 
 ///  contraseña de aplicacion para google :
 /// juev vuxd mobn xisi
-router.post('/sendEmail', (req, res) => {
+router.post('/sendEmail', (req, res, next) => {
   const transporter = nodemailer.createTransport({
     host: 'smtp.gmail.com',
     port: 465,

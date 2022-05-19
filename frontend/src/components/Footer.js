@@ -1,46 +1,53 @@
 import "../style/Footer.css";
+import { Container } from "react-bootstrap";
+import { Link } from "react-router-dom";
+import { AiFillGithub } from "react-icons/ai";
+import { IoRocketSharp } from "react-icons/io5";
 
 const Footer = () => {
   return (
-    <footer className="row row-cols-5 py-5 my-5 border-top footer">
-      <div className="col">
-        <span className="d-flex align-items-center mb-3 logo-text">
-          {"Sativa & Co"}
-        </span>
+    <footer className="row border-top" id="footer">
+      {/* <Container> */}
+      <div className="icons-container">
+        {/* <div style={{ flex: "1" }}> */}
+        <span className="logo-text">GreenShop</span>
+        <href
+          to="https://github.com/leonardo-bravop/GreenShop-E-Commerce"
+          className="icon-link"
+        >
+          <AiFillGithub size="2em" />
+        </href>
+        <href to="https://leonardo-bravop.netlify.app/" className="icon-link">
+          <IoRocketSharp size="2em" />
+        </href>
+        {/* </div> */}
       </div>
-      <div className="col" />
-      <div className="col">
-        <h5>Growshop</h5>
-        <ul className="nav flex-column">
-          <li className="nav-item mb-2">Home</li>
-          <li className="nav-item mb-2">Features</li>
-          <li className="nav-item mb-2">Pricing</li>
-          <li className="nav-item mb-2">FAQs</li>
-          <li className="nav-item mb-2">About</li>
-        </ul>
-      </div>
-      <div className="col">
-        <h5>Combos</h5>
+      <div className="links-container">
+        <div className="footer-column">
+          <h5>Shop</h5>
+          <ul className="nav flex-column">
+            <li className="nav-item mb-2">
+              <Link to="/Plants/All_Plants" className="footer-link">
+                Plants
+              </Link>
+            </li>
+            <li className="nav-item mb-2">
+              <Link to="/Accesories/All_Accesories" className="footer-link">
+                Accesories
+              </Link>
+            </li>
+          </ul>
+        </div>
 
-        <ul className="nav flex-column">
-          <li className="nav-item mb-2">Lamparas Led</li>
-          <li className="nav-item mb-2">Carpas</li>
-          <li className="nav-item mb-2">Fertilizantes</li>
-          <li className="nav-item mb-2">Sustratos</li>
-          <li className="nav-item mb-2">Pipas y Bongs</li>
-        </ul>
+        <div>
+          <h5>About us</h5>
+          <ul className="nav flex-column">
+            <li className="nav-item mb-2">Our story</li>
+            <li className="nav-item mb-2">Contact</li>
+          </ul>
+        </div>
       </div>
-
-      <div className="col">
-        <h5>Nosotros</h5>
-        <ul className="nav flex-column">
-          <li className="nav-item mb-2">Historia</li>
-          <li className="nav-item mb-2">Mision</li>
-          <li className="nav-item mb-2">Pricing</li>
-          <li className="nav-item mb-2">FAQs</li>
-          <li className="nav-item mb-2">About</li>
-        </ul>
-      </div>
+      {/* </Container> */}
     </footer>
   );
 };
