@@ -38,7 +38,6 @@ exports.getAll = (req, res, next) => {
         return a.id - b.id;
       });
 
-      console.log(`items son`, items);
       res.send(items);
     })
     .catch((error) => {

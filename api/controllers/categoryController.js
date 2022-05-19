@@ -99,7 +99,6 @@ exports.getByFamilyId = (req, res, next) => {
 
 exports.getByName = (req, res, next) => {
   const { name } = req.params;
-  console.log(`name es`, name);
   Category.findOne({ where: { name } })
     .then((category) => res.send(category))
     .catch((error) => {
@@ -109,7 +108,6 @@ exports.getByName = (req, res, next) => {
 
 exports.getCatsByProdId = (req, res, next) => {
   const { id } = req.params;
-  console.log(`id es`, id);
   Product.findByPk(id)
     .then((product) => {
       return product.getCategorias();
@@ -134,7 +132,6 @@ exports.deleteByCategId = (req, res, next) => {
 exports.updateByCategId = (req, res, next) => {
   const { id } = req.params;
   const { name, description } = req.body;
-  console.log(`name es`, name);
   Category.update(req.body, { where: { id } })
     .then((data) => res.sendStatus(201))
     .catch((error) => {

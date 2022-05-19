@@ -2,7 +2,6 @@ const OrderDetail = require("../models/OrderDetail");
 
 exports.add = (req, res, next) => {
   const { UserId, total } = req.body;
-  console.log("MIREQ.BODY", req.body);
   OrderDetail.create({ UserId, total, status: "pending" })
     .then((newOrderDetail) => {
       res.send(newOrderDetail);

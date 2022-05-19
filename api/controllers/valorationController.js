@@ -8,7 +8,6 @@ exports.add = (req, res, next) => {
   ProductValoration.findOne({ where: UserId })
     .then((valoration) => {
       if (valoration) {
-        console.log(`encontre valoration`);
         return true;
       } else return null;
     })

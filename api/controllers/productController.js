@@ -83,7 +83,6 @@ exports.addValoration = (req, res, next) => {
 
 exports.update = (req, res, next) => {
   const { id } = req.params;
-  console.log(`req body es`, req.body);
   Product.update(req.body, {
     where: {
       id,
@@ -92,7 +91,6 @@ exports.update = (req, res, next) => {
     plain: true,
   })
     .then((result) => {
-      console.log(`result es`, result);
       const product = result[1];
       res.status(201).json({
         product,
