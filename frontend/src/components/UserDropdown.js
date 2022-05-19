@@ -16,7 +16,6 @@ const UserDropdown = () => {
   const handleLogout = () => {
     dispatch(sendLogoutRequest())
       .then(() => {
-        console.log(`en then antes de reset shopping cart`);
         return dispatch(resetShoppingCart());
       })
       .then(() => {

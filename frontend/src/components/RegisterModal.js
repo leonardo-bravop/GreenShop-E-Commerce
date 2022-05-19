@@ -49,7 +49,6 @@ const RegisterModal = () => {
       )
       .then((data) => {
         setLoading(false);
-        console.log(`result es`, data);
         setShow(false);
       });
     setLoading(true);

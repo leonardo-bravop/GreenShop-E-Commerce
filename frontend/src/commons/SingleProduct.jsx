@@ -153,7 +153,7 @@ const SingleProduct = () => {
             </div>
 
             <div className="product-description text-start">
-              <h4>Detalles del producto</h4>
+              <h4>About the product</h4>
               <p>{product.description}</p>
             </div>
             <div className="text-start">
@@ -192,8 +192,8 @@ const SingleProduct = () => {
                   </Button>
                 </div>
                 <button
-                  className="btn btn-primary"
-                  style={{ fontSize: "1.1em" }}
+                  className="btn btn-primary cart-button"
+                  style={{ fontSize: "1.1em", width: "200px" }}
                   onClick={() => handleOnclick(product.id, quantity)}
                 >
                   Add to Cart

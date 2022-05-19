@@ -13,7 +13,6 @@ const AdminProducts = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(`antes de axios, search value es`, searchValue.value);
     if (searchValue.value.trim()) {
       axios
         .get(`/api/product/name/${searchValue.value.trim()}`)
@@ -28,7 +27,6 @@ const AdminProducts = () => {
   const handleClose = () => setShow(false);
 
   const handleDelete = () => {
-    console.log(`PRODUCT ID ES`, auxProductId);
     axios
       .delete(`/api/product/${auxProductId}`)
       .then(() => {
@@ -76,11 +74,11 @@ const AdminProducts = () => {
         </form>
         <Link to={"/admin/products/new-product"}>
           <button className="btn btn-success" style={{ marginTop: "20px" }}>
-            Create product
+            New product
           </button>
         </Link>
       </div>
-      <Table bordered hover>
+      <Table bordered hover responsive>
         <thead>
           <tr>
             <th>Picture</th>
@@ -114,7 +112,7 @@ const AdminProducts = () => {
                   </div>
                 </td>
                 <td>
-                  <div className="celdaContent">
+                  <div className="action-buttons">
                     <button
                       className="btn btn-danger"
                       onClick={() => {
@@ -139,11 +137,10 @@ const AdminProducts = () => {
                         <button
                           className="btn btn-danger"
                           onClick={() => {
-                            console.log(`EL ID ES`, auxProductId);
                             handleDelete();
                           }}
                         >
-                          Delete
+                          Confirm
                         </button>
                       </Modal.Footer>
                     </Modal>

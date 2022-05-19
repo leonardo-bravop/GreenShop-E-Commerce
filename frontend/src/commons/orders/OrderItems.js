@@ -18,8 +18,6 @@ const OrderItems = () => {
     });
   }, [id]);
 
-  // console.log('soy tu orderItemsssss', orderItems);
-
   return orderItems[0] ? (
     <div className="">
       <Table

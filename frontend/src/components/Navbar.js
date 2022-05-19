@@ -42,9 +42,7 @@ const NavbarComp = () => {
 
   useEffect(() => {
     axios.get("/api/categoryFamily/getAllCategories").then(({ data }) => {
-      // console.log(`---ANTES--------LAS CATEGORY FAMILIES SON`, data);
       const orderedFamilies = data.sort((a, b) => b.name.localeCompare(a.name));
-      // console.log(`-----------LAS CATEGORY FAMILIES SON`, data);
       setCategoryFamilies(data);
     });
   }, []);

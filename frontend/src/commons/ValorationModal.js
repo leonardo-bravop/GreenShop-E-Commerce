@@ -95,11 +95,11 @@ const ValorationModal = ({
     <>
       <div style={{ display: "flex", justifyContent: "center" }}>
         <Button
-          variant={!userValoration ? "success" : "secondary"}
+          variant={!userValoration ? "outline-success" : "outline-secondary"}
           onClick={handleShow}
-          style={{ width: "120px", marginBottom: "20px" }}
+          style={{ width: !user.id? "190px" : "120px", marginBottom: "20px" }}
         >
-          {!userValoration ? "Add a review" : "Edit review"}
+          {!user.id? "Login to add a review" : !userValoration ? "Add a review" : "Edit review"}
         </Button>
       </div>
       <Modal show={show} onHide={handleClose}>

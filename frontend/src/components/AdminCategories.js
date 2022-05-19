@@ -21,7 +21,6 @@ const AdminCategories = () => {
   const handleClose = () => setShow(false);
 
   const handleDelete = () => {
-    console.log(`Categ ID ES`, auxCategId);
     axios
       .delete(`/api/category/${auxCategId}`)
       .then(() => {
@@ -45,10 +44,10 @@ const AdminCategories = () => {
 
   return (
     <div className="container categoriesDiv">
-      <h1 style={{ paddingBottom: "40px" }}>Categorías</h1>
+      <h1 style={{ paddingBottom: "40px" }}>Categories</h1>
       <Link to={"/admin/categories/new-category"}>
         <button className="btn btn-success" style={{ marginBottom: "40px" }}>
-          Crear categoría
+          New Category
         </button>
       </Link>
       <Table bordered hover responsive>
@@ -86,12 +85,12 @@ const AdminCategories = () => {
                         handleShow();
                       }}
                     >
-                      Eliminar
+                      Delete
                     </button>
 
                     <Modal show={show} onHide={handleClose}>
                       <Modal.Header closeButton>
-                        <Modal.Title>Confirmar eliminar categoría?</Modal.Title>
+                        <Modal.Title>Confirm delete category?</Modal.Title>
                       </Modal.Header>
                       <Modal.Footer>
                         <button
@@ -104,7 +103,7 @@ const AdminCategories = () => {
                           className="btn btn-danger"
                           onClick={handleDelete}
                         >
-                          Eliminar
+                          Confirm
                         </button>
                       </Modal.Footer>
                     </Modal>
@@ -115,7 +114,7 @@ const AdminCategories = () => {
                         id={result.id}
                         onClick={handleEdit}
                       >
-                        Editar
+                        Edit
                       </button>
                     </Link>
                   </div>

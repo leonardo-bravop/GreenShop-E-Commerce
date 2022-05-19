@@ -63,7 +63,6 @@ const EditCategForm = () => {
           <div>
             <div style={{ marginBottom: "5px" }}>Category Family:</div>
             {categoryFamilies.map((family) => {
-              console.log(`family es`, family);
               return (
                 <div>
                   <input

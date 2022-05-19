@@ -8,24 +8,33 @@ const Footer = () => {
   return (
     <footer className="row border-top" id="footer">
       {/* <Container> */}
-      <div style={{ flex: "1" }}>
-        <div style={{ flex: "1" }}>
-          <span className="d-flex align-items-center mb-3 logo-text">
-            GreenShop
-          </span>
+      <div className="icons-container">
+        {/* <div style={{ flex: "1" }}> */}
+        <span className="logo-text">GreenShop</span>
+        <href
+          to="https://github.com/leonardo-bravop/GreenShop-E-Commerce"
+          className="icon-link"
+        >
           <AiFillGithub size="2em" />
+        </href>
+        <href to="https://leonardo-bravop.netlify.app/" className="icon-link">
           <IoRocketSharp size="2em" />
-        </div>
+        </href>
+        {/* </div> */}
       </div>
-      <div style={{ flex: "3", display: "flex", justifyContent: "flex-end" }}>
-        <div style={{ padding: "0 40px" }}>
+      <div className="links-container">
+        <div className="footer-column">
           <h5>Shop</h5>
           <ul className="nav flex-column">
             <li className="nav-item mb-2">
-              <Link to="/Plants/All_Plants">Plants</Link>
+              <Link to="/Plants/All_Plants" className="footer-link">
+                Plants
+              </Link>
             </li>
             <li className="nav-item mb-2">
-              <Link to="/Accesories/All_Accesories">Accesories</Link>
+              <Link to="/Accesories/All_Accesories" className="footer-link">
+                Accesories
+              </Link>
             </li>
           </ul>
         </div>

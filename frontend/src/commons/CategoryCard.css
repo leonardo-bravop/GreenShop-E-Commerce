@@ -18,8 +18,9 @@
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
-  width: 250px;
-  height: 250px;
+  width: 200px;
+  height: 200px;
+  margin-bottom: 10px;
 }
 
 .latestcard-name {
@@ -38,24 +39,36 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  margin: 20px 10px;
+  margin: 20px 0;
   transition: 0.3s;
   cursor: pointer;
 }
 
 .latest-card-wrapper {
-  min-width: 250px;
-  height: 300px;
+  width: 200px;
+  height: 250px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
-  margin: 20px 10px;
+  margin: 20px 22px;
   margin-bottom: 0;
   transition: 0.3s;
   cursor: pointer;
   text-decoration: none;
   color: black;
+}
+
+@media (min-width: 600px) {
+  .latest-card-wrapper {
+    min-width: 250px;
+    height: 300px;
+  }
+
+  .latestcard-container {
+    width: 250px;
+    height: 250px;
+  }
 }
 
 .latest-card-wrapper:hover {
@@ -78,32 +91,7 @@
 
 /* Estilos de home */
 
-.largetext-wrapper {
-  width: 100%;
-  height: 250px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  /* margin: 20px 0px; */
-  transition: 0.3s;
-}
 
-.largetext-container {
-  background-size: cover;
-  background-position: center;
-  /* background-position-y: 80%; */
-  width: 100%;
-  height: 100%;
-  filter: brightness(60%);
-}
-
-.largetext-title {
-  padding: 10px;
-  text-align: center;
-  position: absolute;
-  font-size: 2em;
-  color: white;
-}
 /*-------------------------  */
 
 .card-container:hover {
@@ -121,7 +109,7 @@
 .cards-div {
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
   margin-top: 30px;
   margin-bottom: 60px;
@@ -152,7 +140,7 @@
     flex-direction: row;
   }
   .card-wrapper {
-    margin: 0 40px;
+    /* margin: 0 40px; */
     width: 250px;
     height: 250px;
   }
@@ -160,7 +148,7 @@
 
 @media (min-width: 1400px) {
   .card-wrapper {
-    margin: 0 40px;
+    /* margin: 0 40px; */
     width: 350px;
     height: 350px;
     /* flex: 1; */

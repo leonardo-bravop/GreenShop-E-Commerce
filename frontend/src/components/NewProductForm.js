@@ -21,7 +21,6 @@ const NewProductForm = () => {
         categories.forEach((categObj) => {
           auxObj[categObj.id] = false;
         });
-        console.log(`auxobj es`, auxObj);
         setCheckedState(auxObj);
       });
   }, []);
@@ -78,15 +77,11 @@ const NewProductForm = () => {
 
   const handleOnChangeCheck = (categ) => {
     const updatedCheckedState = { ...checkedState };
-    console.log(`updatedcheckstate es`, updatedCheckedState);
-    console.log(`categ es`, categ);
 
     for (const property in updatedCheckedState) {
-      console.log(`property es`, property);
       if (property == categ)
         updatedCheckedState[categ] = !updatedCheckedState[categ];
     }
-    console.log(`updatedcheckstate es`, updatedCheckedState);
 
     setCheckedState(updatedCheckedState);
   };
@@ -101,7 +96,7 @@ const NewProductForm = () => {
             display: "flex",
             flexDirection: "column",
             justifyContent: "center",
-            marginBottom: "50px"
+            marginBottom: "50px",
           }}
           onSubmit={handleSubmit}
         >

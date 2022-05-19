@@ -47,13 +47,13 @@ const AdminUsers = () => {
           <button className="btn btn-primary searchFormBtn">Buscar</button>
         </form>
       </div> */}
-      <Table bordered hover>
+      <Table bordered hover responsive>
         <thead>
           <tr>
             <th>First Name</th>
             <th>Last Name</th>
             <th>Email</th>
-            <th>Acción</th>
+            <th>Action</th>
           </tr>
         </thead>
         <tbody>

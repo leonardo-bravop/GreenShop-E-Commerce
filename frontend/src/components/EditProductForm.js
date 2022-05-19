@@ -32,27 +32,23 @@ const EditProductForm = () => {
     axios
       .get(`/api/product/${id}`)
       .then((res) => {
-        console.log(`res.data es`, res.data);
-        if(res.data.price) res.data.price = parseInt(res.data.price.replace(",", ""))
+        if (res.data.price)
+          res.data.price = parseInt(res.data.price.replace(",", ""));
         setProduct(res.data);
       })
       .then(() => {
         return axios.get(`/api/category/productcategories/${id}`);
       })
       .then(({ data }) => {
-        // setProductCategories(data);
         axios.get("/api/category/getAll").then((res) => {
           let everyCategory = res.data;
           let otroObj = {};
-          // console.log(`todas las categorias`, everyCategory);
-          // console.log(`product category`, data);
           everyCategory.forEach((categObj) => {
             otroObj[categObj.id] = false;
             data.forEach((el) => {
               if (el.id == categObj.id) otroObj[el.id] = true;
             });
           });
-          // console.log(`el arrego magico es`, otroObj);
           setCheckedState(otroObj);
         });
       });
@@ -68,8 +64,8 @@ const EditProductForm = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    
-    product.img.filter(path=>!!path)
+
+    product.img.filter((path) => !!path);
 
     axios
       .put(`/api/product/${product.id}`, product)
@@ -86,15 +82,11 @@ const EditProductForm = () => {
 
   const handleOnChangeCheck = (categ) => {
     const updatedCheckedState = { ...checkedState };
-    console.log(`updatedcheckstate es`, updatedCheckedState);
-    console.log(`categ es`, categ);
 
     for (const property in updatedCheckedState) {
-      console.log(`property es`, property);
       if (property == categ)
         updatedCheckedState[categ] = !updatedCheckedState[categ];
     }
-    console.log(`updatedcheckstate es`, updatedCheckedState);
 
     setCheckedState(updatedCheckedState);
   };
@@ -157,8 +149,6 @@ const EditProductForm = () => {
               } */}
 
               {allCategories.map((categ, index) => {
-                // console.log(`categ es`, categ)
-                // console.log(`checked state dentro de map es`, checkedState)
                 return (
                   <div key={index}>
                     <input
@@ -184,7 +174,7 @@ const EditProductForm = () => {
                 <button className="btn btn-light">Editar categorías</button>
               </Link>
               <Link to="/admin/categories/new-category">
-              <button className="btn btn-dark">Nueva categoría</button>
+                <button className="btn btn-dark">Nueva categoría</button>
               </Link>
             </div>
           </div>

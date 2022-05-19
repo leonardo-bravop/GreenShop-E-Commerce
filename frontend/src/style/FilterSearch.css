@@ -48,7 +48,8 @@
 }
 
 .filter-mobile-header {
-  display: block
+  display: block;
+  align-self: center;
 }
 
 .filter-icon {
@@ -60,6 +61,7 @@
   display: flex;
   justify-content: flex-start;
   padding: 0 12px;
+  margin-top: 10px;
 }
 
 .accordion-div {
@@ -67,11 +69,14 @@
 }
 
 @media (min-width: 600px) {
+  .pagination {
+    margin-top: 0;
+  }
   .filter-header {
     display: block;
   }
   .filter-mobile-header {
-    display: none
+    display: none;
   }
   .accordion-div {
     display: block;
