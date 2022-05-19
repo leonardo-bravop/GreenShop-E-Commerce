@@ -10,7 +10,6 @@ import {
 import { Link, useNavigate } from "react-router-dom";
 import "../style/Navbar.css";
 import UserDropdown from "./UserDropdown";
-// import Sidebar from "./Sidebar-backup";
 import Sidebar from "./Sidebar";
 import axios from "axios";
 import useInput from "../hooks/useInput";
@@ -24,16 +23,15 @@ const NavbarComp = () => {
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
 
-  // const categoryFamilies = ["PLANTS", "ACCESORIES"]
   const [visibleSearch, setVisibleSearch] = useState(false);
-  const searchValue = useInput('');
+  const searchValue = useInput("");
   const handleSubmit = (e) => {
     e.preventDefault();
     if (searchValue.value && searchValue.value.trim()) {
       navigate(`/search/value/${searchValue.value.trim()}`);
       document.querySelector(".search-form").value = "";
       searchValue.onChange(e);
-      handleClose()
+      handleClose();
     }
   };
   const handleVisible = () => {
@@ -51,7 +49,6 @@ const NavbarComp = () => {
 
   return (
     <>
-      {/* <Container fluid> */}
       <div className="navbar-container">
         <Link to="/" className="title">
           GreenShop
@@ -68,19 +65,12 @@ const NavbarComp = () => {
               id={`offcanvasNavbar-expand-${"lg"}`}
               aria-labelledby={`offcanvasNavbarLabel-expand-${"lg"}`}
               placement="start"
-              show={show? "true" : null}
+              show={show ? "true" : null}
               onHide={handleClose}
             >
-              <Offcanvas.Header closeButton>
-                {/* <Offcanvas.Title id={`offcanvasNavbarLabel-expand-${"lg"}`}>
-                  Menu
-                </Offcanvas.Title> */}
-              </Offcanvas.Header>
+              <Offcanvas.Header closeButton></Offcanvas.Header>
               <Offcanvas.Body>
-                <Nav
-                  className="justify-content-center flex-grow-1 pe-3 centered-nav"
-                  // style={{ alignItems: "center" }} poner en breakpoint porque en columna se centra
-                >
+                <Nav className="justify-content-center flex-grow-1 pe-3 centered-nav">
                   <Link
                     to={`/products/all`}
                     className="nav-link"
@@ -89,7 +79,6 @@ const NavbarComp = () => {
                   >
                     PRODUCTS
                   </Link>
-                  {/* <Nav.Link href="#action2">Link</Nav.Link> */}
                   {categoryFamilies.map((categoryFamily) => {
                     return (
                       <NavDropdown
@@ -101,7 +90,9 @@ const NavbarComp = () => {
                         {categoryFamily.categories.map((category) => {
                           return (
                             <Link
-                              to={`/${categoryFamily.name}/${category.name.replace(" ", "_")}`}
+                              to={`/${
+                                categoryFamily.name
+                              }/${category.name.replace(" ", "_")}`}
                               className="category-navlink"
                               key={category.id}
                               onClick={handleClose}
@@ -113,34 +104,7 @@ const NavbarComp = () => {
                       </NavDropdown>
                     );
                   })}
-                  {/* <NavDropdown
-                    title="PLANTS"
-                    id={`offcanvasNavbarDropdown-expand-${"lg"}`}
-                  >
-                    <NavDropdown.Item href="#action3">All</NavDropdown.Item>
-                    <NavDropdown.Item href="#action4">
-                      Succulents
-                    </NavDropdown.Item>
-                    <NavDropdown.Item href="#action4">
-                      House Plants
-                    </NavDropdown.Item>
-                    <NavDropdown.Item href="#action4">Cacti</NavDropdown.Item>
-                  </NavDropdown>
-                  <NavDropdown
-                    title="ACCESORIES"
-                    id={`offcanvasNavbarDropdown-expand-${"lg"}`}
-                  >
-                    <NavDropdown.Item href="#action4">
-                      All
-                    </NavDropdown.Item>
-                    <NavDropdown.Item href="#action3">Pots</NavDropdown.Item>
-                    <NavDropdown.Item href="#action4">
-                      Tools
-                    </NavDropdown.Item>
-                    <NavDropdown.Item href="#action4">
-                      Fertilizers
-                    </NavDropdown.Item>
-                  </NavDropdown> */}
+
                   {user.roleId === 2 || user.roleId === 3 ? (
                     <NavDropdown
                       title="ADMIN"
@@ -179,11 +143,7 @@ const NavbarComp = () => {
                   ) : null}
                 </Nav>
                 <div id="mobile-searchform">
-                  <form
-                    className="d-flex search-form"
-                    // id="search-form"
-                    onSubmit={handleSubmit}
-                  >
+                  <form className="d-flex search-form" onSubmit={handleSubmit}>
                     <input
                       className="form-control me-2 search-input"
                       type="search"
@@ -203,11 +163,7 @@ const NavbarComp = () => {
                   </form>
                 </div>
                 <div id="desktop-searchform">
-                  <form
-                    className="d-flex search-form"
-                    // id="search-form"
-                    onSubmit={handleSubmit}
-                  >
+                  <form className="d-flex search-form" onSubmit={handleSubmit}>
                     {visibleSearch && (
                       <input
                         className="form-control me-2 search-input"
@@ -235,7 +191,6 @@ const NavbarComp = () => {
         <Sidebar />
         <UserDropdown />
       </div>
-      {/* </Container> */}
     </>
   );
 };
