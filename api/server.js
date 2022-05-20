@@ -78,7 +78,7 @@ passport.deserializeUser(function (id, done) {
 });
 
 app.get("/", (req, res, next) => {
-  res.send("GreenShop API is running...");
+  res.send(`GreenShop API is running... You can see the project deployed on...`);
 });
 
 app.use("/api", routes);
