@@ -11,15 +11,15 @@ const Footer = () => {
       <div className="icons-container">
         {/* <div style={{ flex: "1" }}> */}
         <span className="logo-text">GreenShop</span>
-        <href
-          to="https://github.com/leonardo-bravop/GreenShop-E-Commerce"
+        <a
+          href="https://github.com/leonardo-bravop/GreenShop-E-Commerce"
           className="icon-link"
         >
           <AiFillGithub size="2em" />
-        </href>
-        <href to="https://leonardo-bravop.netlify.app/" className="icon-link">
+        </a>
+        <a href="https://leonardo-bravop.netlify.app/" className="icon-link">
           <IoRocketSharp size="2em" />
-        </href>
+        </a>
         {/* </div> */}
       </div>
       <div className="links-container">

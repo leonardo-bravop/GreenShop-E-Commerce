@@ -6,6 +6,7 @@ import {
   Navbar,
   NavDropdown,
   Offcanvas,
+  Spinner,
 } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 import "../style/Navbar.css";
@@ -37,12 +38,23 @@ const NavbarComp = () => {
   const handleVisible = () => {
     setVisibleSearch(!visibleSearch);
   };
+  const [loadingCategories, setLoadingCategories] = useState(false);
 
   useEffect(() => {
-    axios.get("/api/categoryFamily/getAllCategories").then(({ data }) => {
-      const orderedFamilies = data.sort((a, b) => b.name.localeCompare(a.name));
-      setCategoryFamilies(data);
-    });
+    setLoadingCategories(true);
+    axios
+      .get("/api/categoryFamily/getAllCategories")
+      .then(({ data }) => {
+        const orderedFamilies = data.sort((a, b) =>
+          b.name.localeCompare(a.name)
+        );
+        setCategoryFamilies(data);
+        setLoadingCategories(false);
+      })
+      .catch((error) => {
+        setLoadingCategories(false);
+        console.log(`server error, ${error}`);
+      });
   }, []);
 
   const handleShow = () => setShow(true);
@@ -71,76 +83,85 @@ const NavbarComp = () => {
               <Offcanvas.Header closeButton></Offcanvas.Header>
               <Offcanvas.Body>
                 <Nav className="justify-content-center flex-grow-1 pe-3 centered-nav">
-                  <Link
-                    to={`/products/all`}
-                    className="nav-link"
-                    style={{ textDecoration: "none", marginInline: "5px" }}
-                    onClick={handleClose}
-                  >
-                    PRODUCTS
-                  </Link>
-                  {categoryFamilies.map((categoryFamily) => {
-                    return (
-                      <NavDropdown
-                        title={categoryFamily.name.toUpperCase()}
-                        id={`offcanvasNavbarDropdown-expand-${"lg"}`}
-                        key={categoryFamily.id}
-                        style={{ marginInline: "5px" }}
+                  {loadingCategories && (
+                    <div style={{ textAlign: "center" }}>
+                      <Spinner animation="border" variant="secondary" />
+                    </div>
+                  )}
+                  {!loadingCategories && (
+                    <>
+                      <Link
+                        to={`/products/all`}
+                        className="nav-link"
+                        style={{ textDecoration: "none", marginInline: "5px" }}
+                        onClick={handleClose}
                       >
-                        {categoryFamily.categories.map((category) => {
-                          return (
-                            <Link
-                              to={`/${
-                                categoryFamily.name
-                              }/${category.name.replace(" ", "_")}`}
-                              className="category-navlink"
-                              key={category.id}
-                              onClick={handleClose}
-                            >
-                              {category.name}
-                            </Link>
-                          );
-                        })}
-                      </NavDropdown>
-                    );
-                  })}
+                        PRODUCTS
+                      </Link>
+                      {categoryFamilies.map((categoryFamily) => {
+                        return (
+                          <NavDropdown
+                            title={categoryFamily.name.toUpperCase()}
+                            id={`offcanvasNavbarDropdown-expand-${"lg"}`}
+                            key={categoryFamily.id}
+                            style={{ marginInline: "5px" }}
+                          >
+                            {categoryFamily.categories.map((category) => {
+                              return (
+                                <Link
+                                  to={`/${
+                                    categoryFamily.name
+                                  }/${category.name.replace(" ", "_")}`}
+                                  className="category-navlink"
+                                  key={category.id}
+                                  onClick={handleClose}
+                                >
+                                  {category.name}
+                                </Link>
+                              );
+                            })}
+                          </NavDropdown>
+                        );
+                      })}
 
-                  {user.roleId === 2 || user.roleId === 3 ? (
-                    <NavDropdown
-                      title="ADMIN"
-                      id="admin-dropdown"
-                      style={{ marginInline: "5px" }}
-                    >
-                      <Link
-                        to={`/admin/products`}
-                        className="admin-dropitem"
-                        onClick={handleClose}
-                      >
-                        Products
-                      </Link>
-                      <Link
-                        to={`/admin/users`}
-                        className="admin-dropitem"
-                        onClick={handleClose}
-                      >
-                        Users
-                      </Link>
-                      <Link
-                        to={`/admin/orders`}
-                        className="admin-dropitem"
-                        onClick={handleClose}
-                      >
-                        Orders
-                      </Link>
-                      <Link
-                        to={`/admin/categories`}
-                        className="admin-dropitem"
-                        onClick={handleClose}
-                      >
-                        Categories
-                      </Link>
-                    </NavDropdown>
-                  ) : null}
+                      {user.roleId === 2 || user.roleId === 3 ? (
+                        <NavDropdown
+                          title="ADMIN"
+                          id="admin-dropdown"
+                          style={{ marginInline: "5px" }}
+                        >
+                          <Link
+                            to={`/admin/products`}
+                            className="admin-dropitem"
+                            onClick={handleClose}
+                          >
+                            Products
+                          </Link>
+                          <Link
+                            to={`/admin/users`}
+                            className="admin-dropitem"
+                            onClick={handleClose}
+                          >
+                            Users
+                          </Link>
+                          <Link
+                            to={`/admin/orders`}
+                            className="admin-dropitem"
+                            onClick={handleClose}
+                          >
+                            Orders
+                          </Link>
+                          <Link
+                            to={`/admin/categories`}
+                            className="admin-dropitem"
+                            onClick={handleClose}
+                          >
+                            Categories
+                          </Link>
+                        </NavDropdown>
+                      ) : null}
+                    </>
+                  )}
                 </Nav>
                 <div id="mobile-searchform">
                   <form className="d-flex search-form" onSubmit={handleSubmit}>

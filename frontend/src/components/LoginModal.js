@@ -70,7 +70,7 @@ const LoginModal = () => {
             </div>
             <div className="mb-3">
               <label htmlFor="recipient-name" className="col-form-label">
-                Contraseña
+                Password
               </label>
               <input
                 type="password"

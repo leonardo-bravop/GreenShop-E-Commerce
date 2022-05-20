@@ -1,4 +1,4 @@
-import { Accordion, Form, Offcanvas } from "react-bootstrap";
+import { Accordion, Form, Offcanvas, Spinner } from "react-bootstrap";
 import Grid from "./Grid";
 import { useState, useEffect } from "react";
 import axios from "axios";
@@ -12,6 +12,8 @@ const FilterSearch = ({}) => {
   const handleClose = () => setShowMobileFilter(false);
   const handleShow = () => setShowMobileFilter(true);
 
+  const [loadingCategories, setLoadingCategories] = useState(true);
+  const [loadingProducts, setLoadingProducts] = useState(true);
   const [allCategories, setAllCategories] = useState([]);
   const [plantCategories, setPlantsCategories] = useState([]);
   const [accesoriesCategories, setAccesoriesCategories] = useState([]);
@@ -25,6 +27,7 @@ const FilterSearch = ({}) => {
   useEffect(() => {
     const auxObj = {};
     // const auxArr = [];
+    setLoadingCategories(true);
     axios
       .get("/api/category/getbyFamilyId/1")
       .then(({ data }) => {
@@ -40,7 +43,28 @@ const FilterSearch = ({}) => {
         }
         setAccesoriesCategories(data);
         setCheckedState(auxObj);
+        setLoadingCategories(false);
         // setAllCategories(auxArr);
+      })
+      .catch((error) => {
+        setLoadingCategories(false);
+        console.log(`server error, couldn't load categories`);
+      });
+  }, []);
+
+  useEffect(() => {
+    setLoadingProducts(true);
+    axios
+      .get("/api/product/")
+      .then(({ data }) => {
+        setLatestProducts(data);
+        setProducts(data);
+        setAllProducts(data);
+        setLoadingProducts(false);
+      })
+      .catch((error) => {
+        setLoadingProducts(false);
+        console.log(`server error, couldn't load products`);
       });
   }, []);
 
@@ -93,14 +117,6 @@ const FilterSearch = ({}) => {
     setLatestProducts(auxProducts);
   };
 
-  useEffect(() => {
-    axios.get("/api/product/").then(({ data }) => {
-      setLatestProducts(data);
-      setProducts(data);
-      setAllProducts(data);
-    });
-  }, []);
-
   return (
     <div>
       <div className="options">
@@ -142,54 +158,67 @@ const FilterSearch = ({}) => {
                 <Accordion.Header>Category</Accordion.Header>
                 <Accordion.Body>
                   <Form>
-                    <span
-                      style={{
-                        marginBottom: "15px",
-                        display: "inline-block",
-                        fontWeight: "500",
-                      }}
-                    >
-                      Plants
-                    </span>
-                    {plantCategories.length
-                      ? plantCategories.map((category) => {
-                          return (
-                            <Form.Check
-                              key={`${category.categoryfamilyId}-${category.id}`}
-                              type={"checkbox"}
-                              label={category.name}
-                              id={category.id}
-                              value={category?.id}
-                              checked={checkedState[category.id] || false}
-                              onChange={() => handleOnChangeCheck(category.id)}
-                            />
-                          );
-                        })
-                      : null}
-                    <span
-                      style={{
-                        margin: "15px 0",
-                        display: "inline-block",
-                        fontWeight: "500",
-                      }}
-                    >
-                      Accesories
-                    </span>
-                    {accesoriesCategories.length
-                      ? accesoriesCategories.map((category) => {
-                          return (
-                            <Form.Check
-                              key={`${category.categoryfamilyId}-${category.id}`}
-                              type={"checkbox"}
-                              label={category.name}
-                              id={category.id}
-                              value={category?.id}
-                              checked={checkedState[category.id] || false}
-                              onChange={() => handleOnChangeCheck(category.id)}
-                            />
-                          );
-                        })
-                      : null}
+                    {loadingCategories && (
+                      <div style={{ textAlign: "center" }}>
+                        <Spinner animation="border" variant="secondary" />
+                      </div>
+                    )}
+                    {!loadingCategories && (
+                      <>
+                        <span
+                          style={{
+                            marginBottom: "15px",
+                            display: "inline-block",
+                            fontWeight: "500",
+                          }}
+                        >
+                          Plants
+                        </span>
+                        {plantCategories.length
+                          ? plantCategories.map((category) => {
+                              return (
+                                <Form.Check
+                                  key={`${category.categoryfamilyId}-${category.id}`}
+                                  type={"checkbox"}
+                                  label={category.name}
+                                  id={category.id}
+                                  value={category?.id}
+                                  checked={checkedState[category.id] || false}
+                                  onChange={() =>
+                                    handleOnChangeCheck(category.id)
+                                  }
+                                />
+                              );
+                            })
+                          : null}
+                        <span
+                          style={{
+                            margin: "15px 0",
+                            display: "inline-block",
+                            fontWeight: "500",
+                          }}
+                        >
+                          Accesories
+                        </span>
+                        {accesoriesCategories.length
+                          ? accesoriesCategories.map((category) => {
+                              return (
+                                <Form.Check
+                                  key={`${category.categoryfamilyId}-${category.id}`}
+                                  type={"checkbox"}
+                                  label={category.name}
+                                  id={category.id}
+                                  value={category?.id}
+                                  checked={checkedState[category.id] || false}
+                                  onChange={() =>
+                                    handleOnChangeCheck(category.id)
+                                  }
+                                />
+                              );
+                            })
+                          : null}
+                      </>
+                    )}
                   </Form>
                 </Accordion.Body>
               </Accordion.Item>
@@ -214,58 +243,67 @@ const FilterSearch = ({}) => {
                   <Accordion.Header>Category</Accordion.Header>
                   <Accordion.Body>
                     <Form>
-                      <span
-                        style={{
-                          marginBottom: "15px",
-                          display: "inline-block",
-                          fontWeight: "500",
-                        }}
-                      >
-                        Plants
-                      </span>
-                      {plantCategories.length
-                        ? plantCategories.map((category) => {
-                            return (
-                              <Form.Check
-                                key={`${category.categoryfamilyId}-${category.id}`}
-                                type={"checkbox"}
-                                label={category.name}
-                                id={category.id}
-                                value={category.id}
-                                checked={checkedState[category.id] || false}
-                                onChange={() =>
-                                  handleOnChangeCheck(category.id)
-                                }
-                              />
-                            );
-                          })
-                        : null}
-                      <span
-                        style={{
-                          margin: "15px 0",
-                          display: "inline-block",
-                          fontWeight: "500",
-                        }}
-                      >
-                        Accesories
-                      </span>
-                      {accesoriesCategories.length
-                        ? accesoriesCategories.map((category) => {
-                            return (
-                              <Form.Check
-                                key={`${category.categoryfamilyId}-${category.id}`}
-                                type={"checkbox"}
-                                label={category.name}
-                                id={category.id}
-                                value={category.id}
-                                checked={checkedState[category.id] || false}
-                                onChange={() =>
-                                  handleOnChangeCheck(category.id)
-                                }
-                              />
-                            );
-                          })
-                        : null}
+                      {loadingCategories && (
+                        <div style={{ textAlign: "center" }}>
+                          <Spinner animation="border" variant="secondary" />
+                        </div>
+                      )}
+                      {!loadingCategories && (
+                        <>
+                          <span
+                            style={{
+                              marginBottom: "15px",
+                              display: "inline-block",
+                              fontWeight: "500",
+                            }}
+                          >
+                            Plants
+                          </span>
+                          {plantCategories.length
+                            ? plantCategories.map((category) => {
+                                return (
+                                  <Form.Check
+                                    key={`${category.categoryfamilyId}-${category.id}`}
+                                    type={"checkbox"}
+                                    label={category.name}
+                                    id={category.id}
+                                    value={category.id}
+                                    checked={checkedState[category.id] || false}
+                                    onChange={() =>
+                                      handleOnChangeCheck(category.id)
+                                    }
+                                  />
+                                );
+                              })
+                            : null}
+                          <span
+                            style={{
+                              margin: "15px 0",
+                              display: "inline-block",
+                              fontWeight: "500",
+                            }}
+                          >
+                            Accesories
+                          </span>
+                          {accesoriesCategories.length
+                            ? accesoriesCategories.map((category) => {
+                                return (
+                                  <Form.Check
+                                    key={`${category.categoryfamilyId}-${category.id}`}
+                                    type={"checkbox"}
+                                    label={category.name}
+                                    id={category.id}
+                                    value={category.id}
+                                    checked={checkedState[category.id] || false}
+                                    onChange={() =>
+                                      handleOnChangeCheck(category.id)
+                                    }
+                                  />
+                                );
+                              })
+                            : null}
+                        </>
+                      )}
                     </Form>
                   </Accordion.Body>
                 </Accordion.Item>
@@ -274,21 +312,30 @@ const FilterSearch = ({}) => {
           </div>
         )}
         <div className="filtered-div">
-          <div className="pagination">
-            <span>
-              {products.length} {products.length === 1 ? "Result" : "Results"}{" "}
-              found
-            </span>
-            {/* <div>
+          {loadingProducts && (
+            <div style={{ textAlign: "center" }}>
+              <Spinner animation="border" variant="secondary" />
+            </div>
+          )}
+          {!loadingProducts && (
+            <>
+              <div className="pagination">
+                <span>
+                  {products.length}{" "}
+                  {products.length === 1 ? "Result" : "Results"} found
+                </span>
+                {/* <div>
             <button>1</button>
             <button>2</button>
             <button>3</button>
           </div> */}
-          </div>
-          <div style={{ display: "flex", justifyContent: "center" }}>
-            <Grid products={products} />
-            {/* } */}
-          </div>
+              </div>
+              <div style={{ display: "flex", justifyContent: "center" }}>
+                <Grid products={products} />
+                {/* } */}
+              </div>
+            </>
+          )}
         </div>
       </div>
     </div>
