@@ -65,7 +65,7 @@ const AdminProducts = () => {
             name="products"
             id="searchProductsInput"
             className="searchFormInput"
-            placeholder="Busca un producto"
+            placeholder="Search a product"
             {...searchValue}
           />
           <button className="btn btn-primary searchFormBtn" type="submit">
@@ -96,7 +96,7 @@ const AdminProducts = () => {
                     <Link to={`/product/${result.id}`}>
                       <img
                         src={result.img ? result.img[0] : ""}
-                        style={{ width: "100%", maxWidth: "100px" }}
+                        style={{ width: "100%", maxWidth: "100px", height: "100px", objectFit: "contain" }}
                       />
                     </Link>
                   }

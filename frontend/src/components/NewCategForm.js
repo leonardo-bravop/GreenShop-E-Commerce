@@ -35,7 +35,7 @@ const NewCategForm = () => {
 
   return (
     <div className="container singleProductDiv">
-      <h1 className="text-center product-name ">CREAR CATEGORIA</h1>
+      <h1 className="text-center product-name ">NEW CATEGORY</h1>
       <div className="d-flex" style={{ justifyContent: "center" }}>
         <form
           className="col-lg-7"
@@ -47,10 +47,10 @@ const NewCategForm = () => {
           onSubmit={handleSubmit}
         >
           <div className="d-flex flex-column labelAndInput">
-            <label htmlFor="name">Nombre:</label>
+            <label htmlFor="name">Name:</label>
             <input
               type="text"
-              placeholder="Nombre del producto"
+              placeholder="Name of the category"
               name="name"
               className="productInput"
               {...name}
@@ -77,7 +77,7 @@ const NewCategForm = () => {
           })}
 
           <div className="d-flex flex-column labelAndInput">
-            <label htmlFor="description">Descripción:</label>
+            <label htmlFor="description">Description:</label>
             <textarea type="text" placeholder="Description" {...description} />
           </div>
 
@@ -88,7 +88,7 @@ const NewCategForm = () => {
                 type="submit"
                 style={{ marginRight: "0px" }}
               >
-                Crear categoría
+                Create category
               </button>
             </div>
           </div>

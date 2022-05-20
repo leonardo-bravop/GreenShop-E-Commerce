@@ -54,8 +54,8 @@ const NewProductForm = () => {
     const imagesArray = [];
     if (imagePath1.value) imagesArray.push(imagePath1.value);
     if (imagePath2.value) imagesArray.push(imagePath2.value);
-    if (imagePath3.value) imagesArray.push(imagePath1.value);
-    if (imagePath4.value) imagesArray.push(imagePath1.value);
+    if (imagePath3.value) imagesArray.push(imagePath3.value);
+    if (imagePath4.value) imagesArray.push(imagePath4.value);
 
     axios
       .post("/api/product/add", {
@@ -88,7 +88,7 @@ const NewProductForm = () => {
 
   return (
     <div className="container singleProductDiv">
-      <h1 className="text-center product-name ">CREAR PRODUCTO</h1>
+      <h1 className="text-center product-name ">NEW PRODUCT</h1>
       <div className="d-flex" style={{ justifyContent: "center" }}>
         <form
           className="col-lg-7"
@@ -101,17 +101,17 @@ const NewProductForm = () => {
           onSubmit={handleSubmit}
         >
           <div className="d-flex flex-column labelAndInput">
-            <label htmlFor="name">Nombre:</label>
+            <label htmlFor="name">Name:</label>
             <input
               type="text"
-              placeholder="Nombre del producto"
+              placeholder="Name of the product"
               name="name"
               className="productInput"
               {...name}
             />
           </div>
           <div className="d-flex flex-column labelAndInput">
-            <label htmlFor="price">Precio:</label>
+            <label htmlFor="price">Price:</label>
             <span>
               (ARS) $
               <input
@@ -126,7 +126,7 @@ const NewProductForm = () => {
             </span>
           </div>
           <div className="d-flex flex-column labelAndInput">
-            <label htmlFor="category">Categoría:</label>
+            <label htmlFor="category">Category:</label>
 
             {/* <select name="category" id="cars" style={{height: '60px', padding: '0 15px'}} multiple>
               {categorias.map(category=>{
@@ -159,10 +159,10 @@ const NewProductForm = () => {
             </div>
             <div style={{ alignSelf: "flex-end" }}>
               <Link to="/admin/categories">
-                <button className="btn btn-light">Editar categorías</button>
+                <button className="btn btn-light">Edit categories</button>
               </Link>
               <Link to="/admin/categories/new-category">
-                <button className="btn btn-dark">Nueva categoría</button>
+                <button className="btn btn-dark">New category</button>
               </Link>{" "}
             </div>
           </div>
@@ -178,7 +178,7 @@ const NewProductForm = () => {
             />
           </div>
           <div className="d-flex flex-column labelAndInput">
-            <label htmlFor="images">Imagenes:</label>
+            <label htmlFor="images">Images:</label>
             {/* {imgNumber.map((el) => {
               return (
                 <input
@@ -225,7 +225,7 @@ const NewProductForm = () => {
             />
           </div>
           <div className="d-flex flex-column labelAndInput">
-            <label htmlFor="description">Descripción:</label>
+            <label htmlFor="description">Description:</label>
             <textarea type="text" placeholder="Description" {...description} />
           </div>
 
@@ -236,7 +236,7 @@ const NewProductForm = () => {
                 type="submit"
                 style={{ marginRight: "0px" }}
               >
-                Crear producto
+                Create product
               </button>
             </div>
           </div>

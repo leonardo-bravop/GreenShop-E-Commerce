@@ -71,7 +71,7 @@ const AdminUsers = () => {
                         user.id ? parseInt(user.id) === parseInt(usr.id) : true
                       }
                     >
-                      Remover
+                      Remove
                     </button>
                   ) : (
                     <button
@@ -81,7 +81,7 @@ const AdminUsers = () => {
                       }
                       onClick={() => handlePromote(usr.id)}
                     >
-                      Promover
+                      Promote
                     </button>
                   )}
                 </td>

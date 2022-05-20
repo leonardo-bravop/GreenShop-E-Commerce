@@ -36,7 +36,7 @@ const EditCategForm = () => {
 
   return (
     <div className="container singleProductDiv">
-      <h1 className="text-center product-name ">EDITAR CATEGORIA</h1>
+      <h1 className="text-center product-name ">EDIT CATEGORY</h1>
       <div className="d-flex" style={{ justifyContent: "center" }}>
         <form
           className="col-lg-7"
@@ -48,10 +48,10 @@ const EditCategForm = () => {
           onSubmit={handleSubmit}
         >
           <div className="d-flex flex-column labelAndInput">
-            <label htmlFor="name">Nombre:</label>
+            <label htmlFor="name">Name:</label>
             <input
               type="text"
-              placeholder="Nombre del producto"
+              placeholder="Name fo the product"
               value={category.name}
               name="name"
               className="productInput"
@@ -85,7 +85,7 @@ const EditCategForm = () => {
             })}
           </div>
           <div className="d-flex flex-column labelAndInput">
-            <label htmlFor="description">Descripción:</label>
+            <label htmlFor="description">Description:</label>
             <textarea
               type="text"
               value={category.description}
@@ -103,7 +103,7 @@ const EditCategForm = () => {
                 type="submit"
                 style={{ marginRight: "0px" }}
               >
-                Editar categoría
+                Edit category
               </button>
             </div>
           </div>

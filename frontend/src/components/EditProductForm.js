@@ -93,7 +93,7 @@ const EditProductForm = () => {
 
   return (
     <div className="container singleProductDiv">
-      <h1 className="text-center product-name ">EDITAR PRODUCTO</h1>
+      <h1 className="text-center product-name ">EDIT PRODUCT</h1>
       <div className="d-flex" style={{ justifyContent: "center" }}>
         <form
           className="col-lg-7"
@@ -105,10 +105,10 @@ const EditProductForm = () => {
           onSubmit={handleSubmit}
         >
           <div className="d-flex flex-column labelAndInput">
-            <label htmlFor="name">Nombre:</label>
+            <label htmlFor="name">Name:</label>
             <input
               type="text"
-              placeholder="Nombre del producto"
+              placeholder="Name of the product"
               name="name"
               className="productInput"
               value={product.name}
@@ -116,7 +116,7 @@ const EditProductForm = () => {
             />
           </div>
           <div className="d-flex flex-column labelAndInput">
-            <label htmlFor="price">Precio:</label>
+            <label htmlFor="price">Price:</label>
             <span>
               (ARS) $
               <input
@@ -133,7 +133,7 @@ const EditProductForm = () => {
             </span>
           </div>
           <div className="d-flex flex-column labelAndInput">
-            <label htmlFor="category">Categoría:</label>
+            <label htmlFor="category">Category:</label>
 
             {/* <select name="category" id="cars" style={{height: '60px', padding: '0 15px'}} multiple>
               {categorias.map(category=>{
@@ -171,10 +171,10 @@ const EditProductForm = () => {
             </div>
             <div style={{ alignSelf: "flex-end" }}>
               <Link to="/admin/categories">
-                <button className="btn btn-light">Editar categorías</button>
+                <button className="btn btn-light">Edit categories</button>
               </Link>
               <Link to="/admin/categories/new-category">
-                <button className="btn btn-dark">Nueva categoría</button>
+                <button className="btn btn-dark">New category</button>
               </Link>
             </div>
           </div>
@@ -182,7 +182,7 @@ const EditProductForm = () => {
             <label htmlFor="stock">Stock:</label>
             <input
               type="number"
-              placeholder="Stock del producto"
+              placeholder="Product stock"
               min={0}
               name="stock"
               className="productInput"
@@ -193,7 +193,7 @@ const EditProductForm = () => {
             />
           </div>
           <div className="d-flex flex-column labelAndInput">
-            <label htmlFor="images">Imagenes:</label>
+            <label htmlFor="images">Images:</label>
             {/* {product.img? product.img.map(img=>{
               return (
                 <input
@@ -243,7 +243,7 @@ const EditProductForm = () => {
             />
           </div>
           <div className="d-flex flex-column labelAndInput">
-            <label htmlFor="description">Descripción:</label>
+            <label htmlFor="description">Description:</label>
             <textarea
               type="text"
               placeholder="Description"
@@ -259,9 +259,9 @@ const EditProductForm = () => {
               <button
                 className="btn btn-primary"
                 type="submit"
-                style={{ marginRight: "0px" }}
+                style={{ marginRight: "0px", marginBottom: "50px" }}
               >
-                Aceptar
+                Accept
               </button>
             </div>
           </div>
