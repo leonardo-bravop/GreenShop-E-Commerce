@@ -43,7 +43,7 @@ const NavbarComp = () => {
   useEffect(() => {
     setLoadingCategories(true);
     axios
-      .get("/api/categoryFamily/getAllCategories")
+      .get("https://the-green-shop.herokuapp.com/api/categoryFamily/getAllCategories")
       .then(({ data }) => {
         const orderedFamilies = data.sort((a, b) =>
           b.name.localeCompare(a.name)

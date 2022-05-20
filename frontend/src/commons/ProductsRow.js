@@ -10,7 +10,7 @@ const ProductsRow = () => {
   useEffect(() => {
     setLoading(true);
     axios
-      .get("/api/product/latest")
+      .get("https://the-green-shop.herokuapp.com/api/product/latest")
       .then(({ data }) => {
         setProducts(data);
         setLoading(false);

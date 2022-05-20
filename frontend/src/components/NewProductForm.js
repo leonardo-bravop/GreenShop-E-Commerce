@@ -11,7 +11,7 @@ const NewProductForm = () => {
 
   useEffect(() => {
     axios
-      .get("/api/category/getAll")
+      .get("https://the-green-shop.herokuapp.com/api/category/getAll")
       .then(({ data }) => {
         setAllCategories(data);
         return data;
@@ -25,11 +25,8 @@ const NewProductForm = () => {
       });
   }, []);
 
-  const categorias = ["Lámparas", "Carpas", "Fertilizantes", "Sustratos"];
-
   const name = useInput("");
   const price = useInput(0);
-  // const category = useInput([])
   const stock = useInput(0);
   const imagePath1 = useInput("");
   const imagePath2 = useInput("");
@@ -58,7 +55,7 @@ const NewProductForm = () => {
     if (imagePath4.value) imagesArray.push(imagePath4.value);
 
     axios
-      .post("/api/product/add", {
+      .post("https://the-green-shop.herokuapp.com/api/product/add", {
         name: name.value,
         description: description.value,
         price: price.value,
@@ -67,7 +64,7 @@ const NewProductForm = () => {
       })
       .then((res) => {
         const productId = res.data[0].id;
-        axios.post("/api/category/addmanyRelations", {
+        axios.post("https://the-green-shop.herokuapp.com/api/category/addmanyRelations", {
           productId,
           objCategoryId: checkedState,
         });

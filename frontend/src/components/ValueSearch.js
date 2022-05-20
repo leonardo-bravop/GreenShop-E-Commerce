@@ -12,7 +12,7 @@ const ValueSearch = () => {
   useEffect(() => {
     setLoading(true);
     axios
-      .get(`/api/product/name/${value}`)
+      .get(`https://the-green-shop.herokuapp.com/api/product/name/${value}`)
       .then(({ data }) => {
         setFound(data);
         setLoading(false);

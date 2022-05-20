@@ -8,7 +8,7 @@ const AdminCategories = () => {
   const [categories, setCategories] = useState([]);
 
   useEffect(() => {
-    axios.get(`/api/category/getAll/`).then((res) => {
+    axios.get(`https://the-green-shop.herokuapp.com/api/category/getAll/`).then((res) => {
       setCategories(res.data);
     });
   }, []);
@@ -22,12 +22,12 @@ const AdminCategories = () => {
 
   const handleDelete = () => {
     axios
-      .delete(`/api/category/${auxCategId}`)
+      .delete(`https://the-green-shop.herokuapp.com/api/category/${auxCategId}`)
       .then(() => {
         console.log("eliminado");
       })
       .then(() => {
-        axios.get(`/api/category/getAll/`).then((res) => {
+        axios.get(`https://the-green-shop.herokuapp.com/api/category/getAll/`).then((res) => {
           setCategories(res.data);
         });
       });

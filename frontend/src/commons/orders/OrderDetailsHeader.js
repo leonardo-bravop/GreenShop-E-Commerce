@@ -21,7 +21,7 @@ const OrderDetailsHeader = () => {
     setLoading(true);
     if (user.id) {
       axios
-        .get(`/api/orderDetail/getorder/${id}/user/${user.id}`)
+        .get(`https://the-green-shop.herokuapp.com/api/orderDetail/getorder/${id}/user/${user.id}`)
         .then((res) => {
           setOrder(res.data);
           setLoading(false);

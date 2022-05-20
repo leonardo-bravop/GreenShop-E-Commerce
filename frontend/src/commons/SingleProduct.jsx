@@ -56,12 +56,14 @@ const SingleProduct = () => {
     setLoadingInfo(true);
     setLoadingComments(true);
     axios
-      .get(`/api/product/${id}`)
+      .get(`https://the-green-shop.herokuapp.com/api/product/${id}`)
       .then((res) => {
         setProduct(res.data);
         setMainSrc(res.data.img ? res.data.img[0] : "");
         setLoadingInfo(false);
-        return axios.get(`/api/productValoration/getAll/${id}`);
+        return axios.get(
+          `https://the-green-shop.herokuapp.com/api/productValoration/getAll/${id}`
+        );
       })
       .then((res) => {
         if (res.data) {

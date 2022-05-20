@@ -30,17 +30,17 @@ const EditProductForm = () => {
 
   useEffect(() => {
     axios
-      .get(`/api/product/${id}`)
+      .get(`https://the-green-shop.herokuapp.com/api/product/${id}`)
       .then((res) => {
         if (res.data.price)
           res.data.price = parseInt(res.data.price.replace(",", ""));
         setProduct(res.data);
       })
       .then(() => {
-        return axios.get(`/api/category/productcategories/${id}`);
+        return axios.get(`https://the-green-shop.herokuapp.com/api/category/productcategories/${id}`);
       })
       .then(({ data }) => {
-        axios.get("/api/category/getAll").then((res) => {
+        axios.get("https://the-green-shop.herokuapp.com/api/category/getAll").then((res) => {
           let everyCategory = res.data;
           let otroObj = {};
           everyCategory.forEach((categObj) => {
@@ -55,7 +55,7 @@ const EditProductForm = () => {
   }, [id]);
 
   useEffect(() => {
-    axios.get("/api/category/getAll").then(({ data }) => {
+    axios.get("https://the-green-shop.herokuapp.com/api/category/getAll").then(({ data }) => {
       setAllCategories(data);
     });
   }, []);
@@ -68,9 +68,9 @@ const EditProductForm = () => {
     product.img.filter((path) => !!path);
 
     axios
-      .put(`/api/product/${product.id}`, product)
+      .put(`https://the-green-shop.herokuapp.com/api/product/${product.id}`, product)
       .then(() => {
-        return axios.put(`/api/category/updateRelation`, {
+        return axios.put(`https://the-green-shop.herokuapp.com/api/category/updateRelation`, {
           productId: product.id,
           objCategoryId: checkedState,
         });

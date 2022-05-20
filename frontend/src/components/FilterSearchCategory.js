@@ -80,10 +80,10 @@ const FilterSearchCategory = ({ family }) => {
     setLoadingProducts(true);
 
     axios
-      .get(`/api/category/getByName/${name.replace("_", " ")}`)
+      .get(`https://the-green-shop.herokuapp.com/api/category/getByName/${name.replace("_", " ")}`)
       .then(({ data }) => {
         categoryId = data.id;
-        return axios.get(`/api/product/getbyFamilyId/${family.id}`);
+        return axios.get(`https://the-green-shop.herokuapp.com/api/product/getbyFamilyId/${family.id}`);
       })
       .then(({ data }) => {
         const categoriesId = [parseInt(categoryId)];
@@ -98,7 +98,7 @@ const FilterSearchCategory = ({ family }) => {
         setLatestProducts(auxProducts);
         setLoadingProducts(false);
 
-        return axios.get(`/api/category/getbyFamilyId/${family.id}`);
+        return axios.get(`https://the-green-shop.herokuapp.com/api/category/getbyFamilyId/${family.id}`);
       })
       .then(({ data }) => {
         const auxObj = {};

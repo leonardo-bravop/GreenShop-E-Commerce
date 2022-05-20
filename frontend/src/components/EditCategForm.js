@@ -1,26 +1,23 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router";
-import { Link } from "react-router-dom";
-import useInput from "../hooks/useInput";
 
 const EditCategForm = () => {
   const navigate = useNavigate();
   const { id } = useParams();
   // const [checkedState, setCheckedState] = useState("");
 
-  const name = useInput("");
-  const description = useInput("");
-
   const [category, setCategory] = useState({ name: "", description: "" });
   const [categoryFamilies, setCategoryFamilies] = useState([]);
 
   useEffect(() => {
     axios
-      .get(`/api/category/${id}`)
+      .get(`https://the-green-shop.herokuapp.com/api/category/${id}`)
       .then((res) => {
         setCategory(res.data);
-        return axios.get("/api/categoryFamily/getAll");
+        return axios.get(
+          "https://the-green-shop.herokuapp.com/api/categoryFamily/getAll"
+        );
       })
       .then(({ data }) => {
         setCategoryFamilies(data);
@@ -30,7 +27,7 @@ const EditCategForm = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     axios
-      .put(`/api/category/${id}`, category)
+      .put(`https://the-green-shop.herokuapp.com/api/category/${id}`, category)
       .then(() => navigate("/admin/categories"));
   };
 

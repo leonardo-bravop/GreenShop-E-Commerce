@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { Button, Dropdown } from "react-bootstrap";
 import LoginModal from "./LoginModal";
 import "../style/Login.css";

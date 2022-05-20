@@ -2,11 +2,10 @@ import { Link } from "react-router-dom";
 import { Button, Spinner, Table } from "react-bootstrap";
 
 import "../../style/OrderHistorial.css";
-import { useDispatch, useSelector, useStore } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import { useNavigate } from "react-router";
-import { useEffect, useState } from "react";
-import { persistUser } from "../../state/user";
+import { useState } from "react";
 import { getShoppingCart } from "../../state/shoppingCart";
 import {
   addOrCreateItemCart,
@@ -31,7 +30,7 @@ const CartItems = ({ id }) => {
     let orderId;
     setLoadingBuy(true);
     axios
-      .post(`/api/orderDetail/createOrderDetail`, {
+      .post(`https://the-green-shop.herokuapp.com/api/orderDetail/createOrderDetail`, {
         UserId: user.id,
         total: shoppingCart.total,
       })
@@ -39,7 +38,7 @@ const CartItems = ({ id }) => {
         orderId = order.data.id;
         return Promise.all(
           cartItems.map((item) => {
-            axios.post(`/api/orderItem/add`, {
+            axios.post(`https://the-green-shop.herokuapp.com/api/orderItem/add`, {
               price: item.product.price,
               quantity: item.quantity,
               productId: item.productId,
@@ -51,12 +50,12 @@ const CartItems = ({ id }) => {
       .then(() => {
         return Promise.all(
           cartItems.map((item) => {
-            axios.delete(`/api/itemCart/remove/${item.id}`);
+            axios.delete(`https://the-green-shop.herokuapp.com/api/itemCart/remove/${item.id}`);
           })
         );
       })
       .then(() => {
-        return axios.delete(`/api/shoppingCart/${shoppingCart.id}`);
+        return axios.delete(`https://the-green-shop.herokuapp.com/api/shoppingCart/${shoppingCart.id}`);
       })
       .then(() => {
         return dispatch(getShoppingCart());

@@ -29,13 +29,13 @@ const FilterSearch = ({}) => {
     // const auxArr = [];
     setLoadingCategories(true);
     axios
-      .get("/api/category/getbyFamilyId/1")
+      .get("https://the-green-shop.herokuapp.com/api/category/getbyFamilyId/1")
       .then(({ data }) => {
         for (let i = 0; i < data.length; i++) {
           auxObj[data[i].id] = false;
         }
         setPlantsCategories(data);
-        return axios.get("/api/category/getbyFamilyId/2");
+        return axios.get("https://the-green-shop.herokuapp.com/api/category/getbyFamilyId/2");
       })
       .then(({ data }) => {
         for (let j = 0; j < data.length; j++) {
@@ -55,7 +55,7 @@ const FilterSearch = ({}) => {
   useEffect(() => {
     setLoadingProducts(true);
     axios
-      .get("/api/product/")
+      .get("https://the-green-shop.herokuapp.com/api/product/")
       .then(({ data }) => {
         setLatestProducts(data);
         setProducts(data);

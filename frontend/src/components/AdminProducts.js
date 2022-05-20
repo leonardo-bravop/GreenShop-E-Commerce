@@ -15,7 +15,7 @@ const AdminProducts = () => {
     e.preventDefault();
     if (searchValue.value.trim()) {
       axios
-        .get(`/api/product/name/${searchValue.value.trim()}`)
+        .get(`https://the-green-shop.herokuapp.com/api/product/name/${searchValue.value.trim()}`)
         .then((res) => SetResults(res.data));
     }
   };
@@ -28,17 +28,17 @@ const AdminProducts = () => {
 
   const handleDelete = () => {
     axios
-      .delete(`/api/product/${auxProductId}`)
+      .delete(`https://the-green-shop.herokuapp.com/api/product/${auxProductId}`)
       .then(() => {
         console.log("eliminado");
       })
       .then(() => {
         if (searchValue.value) {
           axios
-            .get(`/api/product/name/${searchValue.value}`)
+            .get(`https://the-green-shop.herokuapp.com/api/product/name/${searchValue.value}`)
             .then((res) => SetResults(res.data));
         } else {
-          axios.get("/api/product/").then(({ data }) => SetResults(data));
+          axios.get("https://the-green-shop.herokuapp.com/api/product/").then(({ data }) => SetResults(data));
         }
       });
     setShow(false);
@@ -49,7 +49,7 @@ const AdminProducts = () => {
   //
 
   useEffect(() => {
-    axios.get("/api/product/").then(({ data }) => {
+    axios.get("https://the-green-shop.herokuapp.com/api/product/").then(({ data }) => {
       SetResults(data);
     });
   }, []);

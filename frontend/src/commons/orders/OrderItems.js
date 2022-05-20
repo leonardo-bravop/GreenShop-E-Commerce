@@ -1,9 +1,9 @@
 import { Link } from "react-router-dom";
-import { Button, Spinner, Table } from "react-bootstrap";
+import { Spinner, Table } from "react-bootstrap";
 
 import "../../style/OrderHistorial.css";
 import axios from "axios";
-import { useNavigate, useParams } from "react-router";
+import { useParams } from "react-router";
 import { useEffect, useState } from "react";
 import { addComasToPrice } from "../../utils/PriceFormat";
 
@@ -16,7 +16,7 @@ const OrderItems = () => {
   useEffect(() => {
     setLoadingOrder(true);
     axios
-      .get(`/api/orderItem/getAll/${id}`)
+      .get(`https://the-green-shop.herokuapp.com/api/orderItem/getAll/${id}`)
       .then((res) => {
         setOrderItems(res.data);
         setLoadingOrder(false);

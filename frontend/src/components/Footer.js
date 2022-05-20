@@ -1,5 +1,4 @@
 import "../style/Footer.css";
-import { Container } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { AiFillGithub } from "react-icons/ai";
 import { IoRocketSharp } from "react-icons/io5";
