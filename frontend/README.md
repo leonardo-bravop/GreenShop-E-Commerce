@@ -1,10 +1,5 @@
-# sativa-co
-carrito de compras para sativa &amp; co 
+#The Green Shop frontend
 
-# Backend
+Made with React + Redux and Bootstrap
 
-
-
-# frontEnd 
-
-desarrollado con boostrap 
+You can run the frontend locally with npm start on this folder
