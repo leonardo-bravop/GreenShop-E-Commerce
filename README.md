@@ -4,6 +4,8 @@ Team work project made from scratch with other 5 developers
 
 ## See the project deployed on: https://the-green-shop.netlify.app/
 
+![Main preview](previews/main.png)
+
 ## Frontend: 
 
 React + Redux and Bootstrap
