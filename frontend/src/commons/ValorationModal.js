@@ -48,7 +48,7 @@ const ValorationModal = ({
       if (userValoration) {
         setUserValoration(valoration);
         axios
-          .put(`/api/productValoration/update/${id}`, {
+          .put(`https://the-green-shop.herokuapp.com/api/productValoration/update/${id}`, {
             UserId: user.id,
             review: comment.value,
             valoration: valoration,
@@ -61,7 +61,7 @@ const ValorationModal = ({
       } else {
         setUserValoration(valoration);
         axios
-          .post(`/api/productValoration/add/${id}`, {
+          .post(`https://the-green-shop.herokuapp.com/api/productValoration/add/${id}`, {
             UserId: user.id,
             review: comment.value,
             valoration: valoration,
@@ -79,10 +79,10 @@ const ValorationModal = ({
     document.querySelector(".formComments").value = "";
     comment.onChange(e);
     return axios
-      .get(`/api/productValoration/getAll/${id}`)
+      .get(`https://the-green-shop.herokuapp.com/api/productValoration/getAll/${id}`)
       .then((res) => {
         setComments(res.data);
-        return axios.get(`/api/productValoration/getAverage/${id}`);
+        return axios.get(`https://the-green-shop.herokuapp.com/api/productValoration/getAverage/${id}`);
       })
       .then(({ data }) => {
         if (data) {

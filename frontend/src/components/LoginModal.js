@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Button, Modal, Spinner } from "react-bootstrap";
 import { useDispatch } from "react-redux";
 import useInput from "../hooks/useInput";
@@ -70,7 +70,7 @@ const LoginModal = () => {
             </div>
             <div className="mb-3">
               <label htmlFor="recipient-name" className="col-form-label">
-                Contraseña
+                Password
               </label>
               <input
                 type="password"

@@ -2,29 +2,27 @@ import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { Table } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
-import useInput from '../hooks/useInput';
+// import useInput from '../hooks/useInput';
 import '../style/AdminUsers.css';
-import { useNavigate } from 'react-router';
+// import { useNavigate } from 'react-router';
 
 //FALTA: - Considerar que un admin no puede autorrevocarse un permiso.
 
 const AdminUsers = () => {
-  const navigate = useNavigate();
-
-  const searchValue = useInput('');
+  // const searchValue = useInput('');
 
   const user = useSelector(state => state.user);
 
   const [users, setUsers] = useState([]);
 
   useEffect(() => {
-    axios.get(`/api/user/getAll/${user.roleId}`).then(res => {
+    axios.get(`https://the-green-shop.herokuapp.com/api/user/getAll/${user.roleId}`).then(res => {
       setUsers(res.data);
     });
   }, []);
   const handlePromote = id => {
-    axios.put(`/api/user/admin/adminPromote`, { id }).then(() => {
-      axios.get(`/api/user/getAll/${user.roleId}`).then(res => {
+    axios.put(`https://the-green-shop.herokuapp.com/api/user/admin/adminPromote`, { id }).then(() => {
+      axios.get(`https://the-green-shop.herokuapp.com/api/user/getAll/${user.roleId}`).then(res => {
         setUsers(res.data);
       });
     });
@@ -71,7 +69,7 @@ const AdminUsers = () => {
                         user.id ? parseInt(user.id) === parseInt(usr.id) : true
                       }
                     >
-                      Remover
+                      Remove
                     </button>
                   ) : (
                     <button
@@ -81,7 +79,7 @@ const AdminUsers = () => {
                       }
                       onClick={() => handlePromote(usr.id)}
                     >
-                      Promover
+                      Promote
                     </button>
                   )}
                 </td>

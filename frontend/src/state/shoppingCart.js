@@ -5,7 +5,7 @@ export const addToShoppingCart = createAsyncThunk(
   "ADD_TO_CART",
   (data, thunkAPI) => {
     const { user } = thunkAPI.getState();
-    return axios.post(`/api/add/objectId=${data.id}`, data).then((res) => res);
+    return axios.post(`https://the-green-shop.herokuapp.com/api/add/objectId=${data.id}`, data).then((res) => res);
   }
 );
 
@@ -14,7 +14,7 @@ export const removeFromShoppingCart = createAsyncThunk(
   (data, thunkAPI) => {
     const { user } = thunkAPI.getState();
     return axios
-      .delete(`/api/remove/objectId=${data.id}`, data)
+      .delete(`https://the-green-shop.herokuapp.com/api/remove/objectId=${data.id}`, data)
       .then((res) => res.data);
   }
 );
@@ -24,7 +24,7 @@ export const getShoppingCart = createAsyncThunk(
   (data, thunkAPI) => {
     const { user } = thunkAPI.getState();
     if (user.id) {
-      return axios.get(`/api/shoppingCart/${user.id}`).then((res) => res.data);
+      return axios.get(`https://the-green-shop.herokuapp.com/api/shoppingCart/${user.id}`).then((res) => res.data);
     }
   }
 );

@@ -13,7 +13,7 @@ const Card = ({ data }) => {
               ? data.img[0]
               : "https://peugeot.navigation.com/static/WFS/Shop-Site/-/Shop/en_US/Product%20Not%20Found.png"
           }
-          alt="Card image cap"
+          alt="product main preview"
         />
       </div>
       <div className="card-info">

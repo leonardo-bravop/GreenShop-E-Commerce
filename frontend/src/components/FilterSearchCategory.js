@@ -1,4 +1,4 @@
-import { Accordion, Form, Offcanvas } from "react-bootstrap";
+import { Accordion, Form, Offcanvas, Spinner } from "react-bootstrap";
 import Grid from "./Grid";
 import { useState, useEffect } from "react";
 import axios from "axios";
@@ -13,6 +13,9 @@ const FilterSearchCategory = ({ family }) => {
   const [showMobileFilter, setShowMobileFilter] = useState(false);
   const handleClose = () => setShowMobileFilter(false);
   const handleShow = () => setShowMobileFilter(true);
+
+  const [loadingCategories, setLoadingCategories] = useState(true);
+  const [loadingProducts, setLoadingProducts] = useState(true);
 
   const [allCategories, setAllCategories] = useState([]);
   const [checkedState, setCheckedState] = useState({});
@@ -73,15 +76,19 @@ const FilterSearchCategory = ({ family }) => {
 
   useEffect(() => {
     let categoryId;
+    setLoadingCategories(true);
+    setLoadingProducts(true);
+
     axios
-      .get(`/api/category/getByName/${name.replace("_", " ")}`)
+      .get(`https://the-green-shop.herokuapp.com/api/category/getByName/${name.replace("_", " ")}`)
       .then(({ data }) => {
         categoryId = data.id;
-        return axios.get(`/api/product/getbyFamilyId/${family.id}`);
+        return axios.get(`https://the-green-shop.herokuapp.com/api/product/getbyFamilyId/${family.id}`);
       })
       .then(({ data }) => {
         const categoriesId = [parseInt(categoryId)];
         setAllProducts(data);
+
         let auxProducts = data.filter((product) => {
           for (let i = 0; i < product.categorias.length; i++) {
             if (categoriesId.includes(product.categorias[i].id)) return true;
@@ -89,7 +96,9 @@ const FilterSearchCategory = ({ family }) => {
         });
         setProducts(auxProducts);
         setLatestProducts(auxProducts);
-        return axios.get(`/api/category/getbyFamilyId/${family.id}`);
+        setLoadingProducts(false);
+
+        return axios.get(`https://the-green-shop.herokuapp.com/api/category/getbyFamilyId/${family.id}`);
       })
       .then(({ data }) => {
         const auxObj = {};
@@ -99,7 +108,9 @@ const FilterSearchCategory = ({ family }) => {
         }
         setCheckedState(auxObj);
         setAllCategories(data);
-      });
+        setLoadingCategories(false);
+      })
+      .catch((error) => {});
   }, [name]);
 
   return (
@@ -135,7 +146,12 @@ const FilterSearchCategory = ({ family }) => {
                 <Accordion.Header>Category</Accordion.Header>
                 <Accordion.Body>
                   <Form>
-                    {allCategories.length
+                    {loadingCategories && (
+                      <div style={{ textAlign: "center" }}>
+                        <Spinner animation="border" variant="secondary" />
+                      </div>
+                    )}
+                    {!loadingCategories && allCategories.length
                       ? allCategories.map((category) => {
                           return (
                             <Form.Check
@@ -174,7 +190,12 @@ const FilterSearchCategory = ({ family }) => {
                   <Accordion.Header>Category</Accordion.Header>
                   <Accordion.Body>
                     <Form>
-                      {allCategories.length
+                      {loadingCategories && (
+                        <div style={{ textAlign: "center" }}>
+                          <Spinner animation="border" variant="secondary" />
+                        </div>
+                      )}
+                      {!loadingCategories && allCategories.length
                         ? allCategories.map((category) => {
                             return (
                               <Form.Check
@@ -199,20 +220,29 @@ const FilterSearchCategory = ({ family }) => {
           </div>
         )}
         <div className="filtered-div">
-          <div className="pagination">
-            <span>
-              {products.length} {products.length === 1 ? "Result" : "Results"}
-            </span>
-            {/* <div>
+          {loadingProducts && (
+            <div style={{ textAlign: "center" }}>
+              <Spinner animation="border" variant="secondary" />
+            </div>
+          )}
+          {!loadingProducts && (
+            <>
+              <div className="pagination">
+                <span>
+                  {products.length}{" "}
+                  {products.length === 1 ? "Result" : "Results"}
+                </span>
+                {/* <div>
             <button>1</button>
             <button>2</button>
             <button>3</button>
           </div> */}
-          </div>
-          <div style={{ display: "flex", justifyContent: "center" }}>
-            <Grid products={products} />
-            {/* } */}
-          </div>
+              </div>
+              <div style={{ display: "flex", justifyContent: "center" }}>
+                <Grid products={products} />
+              </div>
+            </>
+          )}
         </div>
       </div>
     </div>

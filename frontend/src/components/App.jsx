@@ -49,10 +49,10 @@ function App() {
 
   useEffect(() => {
     axios
-      .get("/api/product/")
+      .get("https://the-green-shop.herokuapp.com/api/product/")
       .then((res) => {
         setProducts(res.data);
-        return axios.get("/api/categoryFamily/getAll");
+        return axios.get("https://the-green-shop.herokuapp.com/api/categoryFamily/getAll");
       })
       .then(({ data }) => {
         setCategoryFamilies(data);

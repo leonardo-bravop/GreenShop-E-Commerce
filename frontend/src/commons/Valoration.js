@@ -3,9 +3,6 @@ import { useSelector } from "react-redux";
 import { useParams } from "react-router";
 import axios from "axios";
 import "../style/Valoration.css";
-import { Button, Modal } from "react-bootstrap";
-// import Comments from "../components/Comments";
-import useInput from "../hooks/useInput";
 import ValorationModal from "./ValorationModal.js";
 
 const Valoration = ({ setAverageValoration, setComments }) => {
@@ -14,7 +11,7 @@ const Valoration = ({ setAverageValoration, setComments }) => {
   const [userValoration, setUserValoration] = useState(0);
 
   useEffect(() => {
-    axios.get(`/api/productValoration/getAverage/${id}`).then(({ data }) => {
+    axios.get(`https://the-green-shop.herokuapp.com/api/productValoration/getAverage/${id}`).then(({ data }) => {
       if (data) {
         setAverageValoration(data.average);
       }
@@ -24,7 +21,7 @@ const Valoration = ({ setAverageValoration, setComments }) => {
   useEffect(() => {
     if (user.id) {
       axios
-        .get(`/api/productValoration/getByUserId/${user.id}/productId/${id}`)
+        .get(`https://the-green-shop.herokuapp.com/api/productValoration/getByUserId/${user.id}/productId/${id}`)
         .then(({ data }) => {
           setUserValoration(data.valoration);
         });

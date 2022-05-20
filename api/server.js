@@ -2,7 +2,7 @@ const express = require("express");
 const http = require("http");
 const { User } = require("./models");
 const dotenv = require("dotenv");
-const cors = require('cors')
+const cors = require("cors");
 
 const app = express();
 dotenv.config();
@@ -18,7 +18,7 @@ const sessions = require("express-session");
 const passport = require("passport");
 const localStrategy = require("passport-local").Strategy;
 
-app.use(cors())
+app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
@@ -78,7 +78,9 @@ passport.deserializeUser(function (id, done) {
 });
 
 app.get("/", (req, res, next) => {
-  res.send("GreenShop API is running...");
+  res.send(
+    `GreenShop API is running... You can see the project deployed on https://the-green-shop.netlify.app/`
+  );
 });
 
 app.use("/api", routes);

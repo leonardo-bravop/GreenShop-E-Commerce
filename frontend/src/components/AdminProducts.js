@@ -15,7 +15,7 @@ const AdminProducts = () => {
     e.preventDefault();
     if (searchValue.value.trim()) {
       axios
-        .get(`/api/product/name/${searchValue.value.trim()}`)
+        .get(`https://the-green-shop.herokuapp.com/api/product/name/${searchValue.value.trim()}`)
         .then((res) => SetResults(res.data));
     }
   };
@@ -28,17 +28,17 @@ const AdminProducts = () => {
 
   const handleDelete = () => {
     axios
-      .delete(`/api/product/${auxProductId}`)
+      .delete(`https://the-green-shop.herokuapp.com/api/product/${auxProductId}`)
       .then(() => {
         console.log("eliminado");
       })
       .then(() => {
         if (searchValue.value) {
           axios
-            .get(`/api/product/name/${searchValue.value}`)
+            .get(`https://the-green-shop.herokuapp.com/api/product/name/${searchValue.value}`)
             .then((res) => SetResults(res.data));
         } else {
-          axios.get("/api/product/").then(({ data }) => SetResults(data));
+          axios.get("https://the-green-shop.herokuapp.com/api/product/").then(({ data }) => SetResults(data));
         }
       });
     setShow(false);
@@ -49,7 +49,7 @@ const AdminProducts = () => {
   //
 
   useEffect(() => {
-    axios.get("/api/product/").then(({ data }) => {
+    axios.get("https://the-green-shop.herokuapp.com/api/product/").then(({ data }) => {
       SetResults(data);
     });
   }, []);
@@ -65,7 +65,7 @@ const AdminProducts = () => {
             name="products"
             id="searchProductsInput"
             className="searchFormInput"
-            placeholder="Busca un producto"
+            placeholder="Search a product"
             {...searchValue}
           />
           <button className="btn btn-primary searchFormBtn" type="submit">
@@ -96,7 +96,7 @@ const AdminProducts = () => {
                     <Link to={`/product/${result.id}`}>
                       <img
                         src={result.img ? result.img[0] : ""}
-                        style={{ width: "100%", maxWidth: "100px" }}
+                        style={{ width: "100%", maxWidth: "100px", height: "100px", objectFit: "contain" }}
                       />
                     </Link>
                   }

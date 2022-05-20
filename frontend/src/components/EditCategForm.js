@@ -1,26 +1,23 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router";
-import { Link } from "react-router-dom";
-import useInput from "../hooks/useInput";
 
 const EditCategForm = () => {
   const navigate = useNavigate();
   const { id } = useParams();
   // const [checkedState, setCheckedState] = useState("");
 
-  const name = useInput("");
-  const description = useInput("");
-
   const [category, setCategory] = useState({ name: "", description: "" });
   const [categoryFamilies, setCategoryFamilies] = useState([]);
 
   useEffect(() => {
     axios
-      .get(`/api/category/${id}`)
+      .get(`https://the-green-shop.herokuapp.com/api/category/${id}`)
       .then((res) => {
         setCategory(res.data);
-        return axios.get("/api/categoryFamily/getAll");
+        return axios.get(
+          "https://the-green-shop.herokuapp.com/api/categoryFamily/getAll"
+        );
       })
       .then(({ data }) => {
         setCategoryFamilies(data);
@@ -30,13 +27,13 @@ const EditCategForm = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     axios
-      .put(`/api/category/${id}`, category)
+      .put(`https://the-green-shop.herokuapp.com/api/category/${id}`, category)
       .then(() => navigate("/admin/categories"));
   };
 
   return (
     <div className="container singleProductDiv">
-      <h1 className="text-center product-name ">EDITAR CATEGORIA</h1>
+      <h1 className="text-center product-name ">EDIT CATEGORY</h1>
       <div className="d-flex" style={{ justifyContent: "center" }}>
         <form
           className="col-lg-7"
@@ -48,10 +45,10 @@ const EditCategForm = () => {
           onSubmit={handleSubmit}
         >
           <div className="d-flex flex-column labelAndInput">
-            <label htmlFor="name">Nombre:</label>
+            <label htmlFor="name">Name:</label>
             <input
               type="text"
-              placeholder="Nombre del producto"
+              placeholder="Name fo the product"
               value={category.name}
               name="name"
               className="productInput"
@@ -85,7 +82,7 @@ const EditCategForm = () => {
             })}
           </div>
           <div className="d-flex flex-column labelAndInput">
-            <label htmlFor="description">Descripción:</label>
+            <label htmlFor="description">Description:</label>
             <textarea
               type="text"
               value={category.description}
@@ -103,7 +100,7 @@ const EditCategForm = () => {
                 type="submit"
                 style={{ marginRight: "0px" }}
               >
-                Editar categoría
+                Edit category
               </button>
             </div>
           </div>

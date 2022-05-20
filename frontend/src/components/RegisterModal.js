@@ -28,7 +28,7 @@ const RegisterModal = () => {
     if (!validateString(first_name.value)) return;
     if (!validateString(last_name.value)) return;
     if (!validateEmail(email.value)) return;
-    if (!password.value) {
+    if (!password.value || password.value.length<8) {
       setPasswordError(true);
       return;
     }
@@ -73,7 +73,7 @@ const RegisterModal = () => {
           <form onSubmit={handleRegister}>
             <div className="mb-3">
               <label htmlFor="recipient-name" className="col-form-label">
-                Nombre
+                Name
               </label>
               <input
                 type="text"
@@ -87,7 +87,7 @@ const RegisterModal = () => {
             </div>
             <div className="mb-3">
               <label htmlFor="recipient-lastname" className="col-form-label">
-                Apellido
+                Lastname
               </label>
               <input
                 type="text"
@@ -118,7 +118,7 @@ const RegisterModal = () => {
             </div>
             <div className="mb-3">
               <label htmlFor="recipient-password" className="col-form-label">
-                Contraseña
+                Password
               </label>
               <input
                 type="password"
@@ -126,6 +126,8 @@ const RegisterModal = () => {
                 required
                 id="recipient-password"
                 {...password}
+                placeholder="8+ characters"
+                minLength={8}
               />
               {passwordError && (
                 <div style={{ color: "red" }}>

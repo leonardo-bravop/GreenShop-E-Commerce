@@ -1,4 +1,4 @@
-import { Button, Table } from "react-bootstrap";
+import { Button } from "react-bootstrap";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import "../../style/CardOrderDetail.css";

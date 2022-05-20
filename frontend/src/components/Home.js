@@ -1,16 +1,13 @@
 import { Container } from "react-bootstrap";
 import CategoryCard from "../commons/CategoryCard";
 import ProductsRow from "../commons/ProductsRow";
-import Grid from "./Grid";
-import "../style/Home.css"
+import "../style/Home.css";
 
 const Home = () => {
   return (
     <>
       <div className="home-imgwrapper">
-        <div
-          className="home-imgdiv"
-        ></div>
+        <div className="home-imgdiv"></div>
         <h1
           style={{
             padding: "10px",
@@ -35,10 +32,12 @@ const Home = () => {
           }}
           className="largetext-container"
         ></div>
-        <div className="largetext-title">Everything your plants need, in one place</div>
+        <div className="largetext-title">
+          Everything your plants need, in one place
+        </div>
       </div>
 
-      <Container style={{marginTop: "30px"}}>
+      <Container style={{ marginTop: "30px" }}>
         <h2>Latest</h2>
         <ProductsRow />
       </Container>
