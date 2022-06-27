@@ -184,7 +184,7 @@ const SingleProduct = () => {
                   <p>{product.description}</p>
                 </div>
                 <div className="text-start">
-                  <label htmlFor="quantity">Cantidad: </label>
+                  <label htmlFor="quantity">Quantity: </label>
                   <div className="d-flex buyDiv">
                     <div className="d-flex quantity-flex">
                       <Button
