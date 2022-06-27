@@ -28,7 +28,7 @@ app.use(cookieParser());
 
 app.use(
   sessions({
-    secret: "sativaANDco",
+    secret: "greenShop",
     resave: true,
     saveUninitialized: true,
     cookie: { _expires: 60000000000000 },
