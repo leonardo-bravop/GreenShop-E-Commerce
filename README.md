@@ -19,4 +19,4 @@ React + Redux and Bootstrap
 
 ## Backend: 
 
-nodeJS, Express and PSQL with Sequelize
+Node.js, Express and PostgreSQL with Sequelize
